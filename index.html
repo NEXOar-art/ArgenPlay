@@ -122,14 +122,51 @@
         .tile {
             position: absolute; background: var(--bg-panel); border-radius: var(--tile-radius);
             cursor: pointer; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s, box-shadow 0.4s, background 0.4s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
-        .tile.filtered-out { opacity: 0.1; filter: grayscale(1); pointer-events: none; }
-        @keyframes blink-hot { 0%, 100% { border-color: var(--hot); box-shadow: 0 0 10px var(--hot); } 50% { border-color: white; box-shadow: 0 0 30px var(--hot); } }
-        .tier-high { animation: blink-hot 1.5s infinite; border-color: var(--hot); border-width: 3px; }
-        .tier-mid { border-color: var(--yellow); border-width: 2px; }
-        .tier-low { border-color: var(--green); border-width: 2px; }
+        .tile.filtered-out { opacity: 0.08; filter: grayscale(1); pointer-events: none; }
+
+        /* COLORES DE FONDO SEGÚN TIPO DE DESCUENTO */
+        .tier-high { 
+            background: rgba(239, 68, 68, 0.15); 
+            animation: blink-hot 1.5s infinite; 
+            border-color: var(--hot); 
+            border-width: 3px; 
+        }
+        .tier-mid { 
+            background: rgba(234, 179, 8, 0.15); 
+            border-color: var(--yellow); 
+            border-width: 2px; 
+        }
+        .tier-low { 
+            background: rgba(34, 197, 94, 0.15); 
+            border-color: var(--green); 
+            border-width: 2px; 
+        }
+
+        /* EFECTO AGRANDADO + COLOR MÁS INTENSO */
+        .tile.enlarged {
+            transform: scale(1.7);
+            z-index: 50;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.9);
+        }
+        .tier-high.enlarged { 
+            background: rgba(239, 68, 68, 0.35); 
+            animation: blink-hot 1.2s infinite; 
+            border-width: 4px; 
+        }
+        .tier-mid.enlarged { 
+            background: rgba(234, 179, 8, 0.35); 
+            border-width: 3px; 
+        }
+        .tier-low.enlarged { 
+            background: rgba(34, 197, 94, 0.35); 
+            border-width: 3px; 
+        }
+
+        @keyframes blink-hot { 0%, 100% { border-color: var(--hot); box-shadow: 0 0 15px var(--hot); } 50% { border-color: white; box-shadow: 0 0 40px var(--hot); } }
+
         .tile-img { width: 100%; height: 55%; object-fit: cover; }
         .tile-info {
             height: 45%;
@@ -163,8 +200,8 @@
         .modal.active { display:flex; }
         .modal-content { background:#1e293b; width:90%; max-width:420px; border-radius:15px; overflow:hidden; border:1px solid #334155; }
         .modal-img { width:100%; height:220px; object-fit:cover; }
-        .modal-body { padding:20px; text-align:center; }
-        .modal-title { color:var(--accent); font-size:1.4rem; margin-bottom:10px; }
+        .modal-body { padding:20px; text-align:left; }
+        .modal-title { color:var(--accent); font-size:1.4rem; margin-bottom:10px; text-align:center; }
         .modal-desc { color:#ccc; margin:15px 0; font-size:0.9rem; }
         .modal-actions {
             display:flex; flex-direction:column; gap:12px; margin-top:20px;
@@ -175,6 +212,7 @@
         }
         .btn-wa { background:#25D366; color:white; border:none; }
         .btn-map { background:#4285F4; color:white; border:none; }
+        .btn-web { background:#E1306C; color:white; border:none; }
         .btn-close { background:none; color:#888; border:1px solid #444; margin-top:10px; }
         .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.3); transform: scale(0); animation: ripple 0.6s linear; pointer-events: none; }
         @keyframes ripple { to { transform: scale(4); opacity: 0; } }
@@ -214,7 +252,6 @@
         </div>
     </div>
 
-    <!-- BARRA DE TOGGLE PARA MOSTRAR/OCULTAR FILTROS -->
     <div class="filter-toggle" onclick="toggleFilters()">
         <i class="fas fa-filter"></i> <span>FILTROS</span> <i class="fas fa-chevron-down" id="filter-arrow"></i>
     </div>
@@ -266,17 +303,51 @@
                     <button class="modal-btn btn-map" id="m-map">
                         <i class="fas fa-map-marker-alt"></i> Ver Ubicación
                     </button>
+                    <button class="modal-btn btn-web" id="m-web">
+                        <i class="fab fa-instagram"></i> Visitar Página / Redes
+                    </button>
                     <button class="modal-btn btn-close" onclick="closeModal()">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- MODAL PRIVACIDAD -->
     <div class="modal" id="modal-privacy">
         <div class="modal-content">
-            <div style="padding:20px;">
-                <h2 style="color:var(--accent);">Políticas de Privacidad</h2>
-                <p style="color:#ccc; line-height:1.5;">Esta aplicación no recolecta, almacena ni comparte datos personales. Todo el contenido es local y se ejecuta en tu dispositivo.<br><br>Los enlaces externos son gestionados por sus respectivas plataformas.</p>
-                <button onclick="closePrivacyModal()" style="width:100%; background:var(--primary); color:white; border:none; padding:15px; border-radius:10px; margin-top:20px; font-weight:bold;">Cerrar</button>
+            <div style="padding:20px; text-align:left;">
+                <h2 style="color:var(--accent); text-align:center;">Política de Privacidad y Responsabilidad</h2>
+                <h3 style="color:var(--accent); margin-top:20px;">1. Protección de Datos</h3>
+                <ul style="color:#ccc; line-height:1.6; margin-left:20px;">
+                    <li>La plataforma garantiza que los datos personales proporcionados por los usuarios se encuentran asegurados y protegidos.</li>
+                    <li>La única finalidad del uso de dichos datos es la gestión de comunicaciones de marketing por correo electrónico (mail marketing), siempre respetando la normativa vigente en materia de protección de datos.</li>
+                    <li>No se cederán datos a terceros sin consentimiento expreso del usuario.</li>
+                </ul>
+
+                <h3 style="color:var(--accent); margin-top:20px;">2. Responsabilidad sobre Transacciones</h3>
+                <ul style="color:#ccc; line-height:1.6; margin-left:20px;">
+                    <li>La plataforma no se hace responsable de las transacciones privadas entre terceros que puedan surgir fuera de su entorno.</li>
+                    <li>Cualquier acuerdo, compra, venta o intercambio realizado entre usuarios o con terceros ajenos a la plataforma será responsabilidad exclusiva de las partes involucradas. La plataforma solo funciona como facilitador publicitario.</li>
+                </ul>
+
+                <h3 style="color:var(--accent); margin-top:20px;">3. Comunicaciones con Clientes</h3>
+                <ul style="color:#ccc; line-height:1.6; margin-left:20px;">
+                    <li>La plataforma no intercede en las comunicaciones entre locales y sus clientes.</li>
+                    <li>La única interacción directa de la plataforma es con los usuarios que desean publicar contenidos o anuncios dentro de la misma.</li>
+                </ul>
+
+                <h3 style="color:var(--accent); margin-top:20px;">4. Donaciones y Pagos</h3>
+                <ul style="color:#ccc; line-height:1.6; margin-left:20px;">
+                    <li>La plataforma no solicita donaciones ni pagos voluntarios de los usuarios.</li>
+                    <li>Cualquier servicio adicional o contratación se informará de manera clara y transparente, sin cargos ocultos.</li>
+                </ul>
+
+                <h3 style="color:var(--accent); margin-top:20px;">5. Alcance de la Responsabilidad</h3>
+                <ul style="color:#ccc; line-height:1.6; margin-left:20px;">
+                    <li>La plataforma se limita a ofrecer un espacio digital para la publicación de contenidos.</li>
+                    <li>No asume responsabilidad por el uso indebido de la información publicada ni por las consecuencias derivadas de interacciones externas entre usuarios o terceros.</li>
+                </ul>
+
+                <button onclick="closePrivacyModal()" style="width:100%; background:var(--primary); color:white; border:none; padding:15px; border-radius:10px; margin-top:30px; font-weight:bold;">Cerrar</button>
             </div>
         </div>
     </div>
@@ -287,54 +358,45 @@
         let activeFilters = { cat: null, discount: null };
 
         const tilesData = [
-            // CARNICERÍA
-            { name: "Carnicería Julián", cat: "CARNICERIA", discount: 45, img: "https://images.unsplash.com/photo-1589984667390-09eb86d8b8f5?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=9+de+Julio+1185,+Campana" },
-            { name: "Estancias del Sur", cat: "CARNICERIA", discount: 50, img: "https://images.unsplash.com/photo-1607623174012-3e2c3b8d9f8d?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Blvd.+Sarmiento+287,+Campana" },
-            { name: "Carnicería Sarmiento", cat: "CARNICERIA", discount: 30, img: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Blvd.+Sarmiento+888,+Campana" },
-            { name: "Carnicería Melo", cat: "CARNICERIA", discount: 40, img: "https://images.unsplash.com/photo-1516738909773-2d7e7e9d8b2d?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Jean+Jaures,+Campana" },
-            { name: "Frigorífico Criscar", cat: "CARNICERIA", discount: 25, img: "https://images.unsplash.com/photo-1603048714872-9f7e3c2d3f7e?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Rivadavia+1700,+Campana" },
-            // KIOSCO
-            { name: "Kiosk May 1", cat: "KIOSCO", discount: 15, img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Necochea+905,+Campana" },
-            { name: "El Kiosco de la Esquina", cat: "KIOSCO", discount: 20, img: "https://images.unsplash.com/photo-1590674899488-8b8f4e7f3d3f?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Rawson+401,+Campana" },
-            { name: "Kiosco del Sol", cat: "KIOSCO", discount: 35, img: "https://images.unsplash.com/photo-1620394780256-9fdfc2f8c5d3?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=San+Martín+999,+Campana" },
-            { name: "Kiosco Las Mellis", cat: "KIOSCO", discount: 10, img: "https://images.unsplash.com/photo-1604719312566-2a3d3e3e68e9?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Francisco+Lavezzari+3,+Campana" },
-            // TECH
-            { name: "Electrónica Proton", cat: "TECH", discount: 50, img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Ing.+Agustín+Rocca+290,+Campana" },
-            { name: "Megastore", cat: "TECH", discount: 30, img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+524,+Campana" },
-            { name: "Dr. Cell Campana", cat: "TECH", discount: 40, img: "https://images.unsplash.com/photo-1588508065123-6f0d6a5c3f9f?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+320,+Campana" },
-            // MODA
-            { name: "Campanitas Mora", cat: "MODA", discount: 35, img: "https://images.unsplash.com/photo-1445205170230-053b830c6050?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Barnetche+2119,+Campana" },
-            { name: "Lola Mona Indumentaria", cat: "MODA", discount: 45, img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Mitre+1172,+Campana" },
-            { name: "Circle Campana", cat: "MODA", discount: 25, img: "https://images.unsplash.com/photo-1539109136881-3d8f7e8d0b3a?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+1118,+Campana" },
-            { name: "Reina Juana", cat: "MODA", discount: 20, img: "https://images.unsplash.com/photo-1590399214748-337e44f2c6e4?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+502,+Campana" },
-            // FOOD
-            { name: "La Catedral", cat: "FOOD", discount: 30, img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+370,+Campana" },
-            { name: "Emblema", cat: "FOOD", discount: 40, img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Blvd.+Sarmiento+101,+Campana" },
-            { name: "TODO CASERO", cat: "FOOD", discount: 15, img: "https://images.unsplash.com/photo-1571091655789-84b2c56ea2a3?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=San+Martín+402,+Campana" },
-            { name: "Anik Campana", cat: "FOOD", discount: 50, img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=9+de+Julio+749,+Campana" },
-            { name: "McDonald's Campana", cat: "FOOD", discount: 25, img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=RN9+Km.+72.5,+Campana" },
-            // TALLER MECÁNICO
-            { name: "Taller Mecánico Campana", cat: "TALLERMECANICO", discount: 40, img: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=taller+mecanico+campana" },
-            { name: "Auto Service Rodríguez", cat: "TALLERMECANICO", discount: 30, img: "https://images.unsplash.com/photo-1544636331-8985c7dbe9e5?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=auto+service+rodriguez+campana" },
-            { name: "Mecánica Rápida", cat: "TALLERMECANICO", discount: 50, img: "https://images.unsplash.com/photo-1581092160607-36e2b8f0b4d4?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=mecanica+rapida+campana" },
-            { name: "Taller El Pro", cat: "TALLERMECANICO", discount: 20, img: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c7?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=taller+el+pro+campana" },
-            { name: "Neumáticos Campana", cat: "TALLERMECANICO", discount: 35, img: "https://images.unsplash.com/photo-1590674899488-8b8f4e7f3d3f?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=neumaticos+campana" },
-            // MEDICINA
-            { name: "Farmacia Pérez", cat: "MEDICINA", discount: 25, img: "https://images.unsplash.com/photo-1580281964126-1d9c2e2f2b9b?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=farmacia+perez+campana" },
-            { name: "Clínica Campana", cat: "MEDICINA", discount: 35, img: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=clinica+campana" },
-            { name: "Farmacia del Centro", cat: "MEDICINA", discount: 15, img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=farmacia+centro+campana" },
-            { name: "Centro Médico Norte", cat: "MEDICINA", discount: 45, img: "https://images.unsplash.com/photo-1519494026892-80e512f5f3d8?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=centro+medico+norte+campana" },
-            { name: "Farmacia de Turno", cat: "MEDICINA", discount: 20, img: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=farmacia+turno+campana" },
-            // BELLEZA
-            { name: "Pelquería Estilo", cat: "BELLEZA", discount: 40, img: "https://images.unsplash.com/photo-1580616295015-9f4a404bde9e?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=peluqueria+campana" },
-            { name: "Estética Glam", cat: "BELLEZA", discount: 50, img: "https://images.unsplash.com/photo-1522338242992-e1a5497595f9?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=estetica+campana" },
-            { name: "Manicuria & Belleza", cat: "BELLEZA", discount: 25, img: "https://images.unsplash.com/photo-1597220954831-7d90be692ac1?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=manicuria+campana" },
-            { name: "Salón de Belleza Luna", cat: "BELLEZA", discount: 35, img: "https://images.unsplash.com/photo-1512290505090-f90d9134154b?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=salon+belleza+campana" },
-            // PETSHOP
-            { name: "Pet Shop Amigos", cat: "PETSHOP", discount: 30, img: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=pet+shop+campana" },
-            { name: "Veterinaria Campana", cat: "PETSHOP", discount: 45, img: "https://images.unsplash.com/photo-1560806887-1f3e4dc4d8d7?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=veterinaria+campana" },
-            { name: "Mascotas Feliz", cat: "PETSHOP", discount: 20, img: "https://images.unsplash.com/photo-1552673597-e3e0b5b7f9d0?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=mascotas+campana" },
-            { name: "Pet Center", cat: "PETSHOP", discount: 35, img: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=pet+shop+campana" },
+            { name: "Carnicería Julián", cat: "CARNICERIA", discount: 45, img: "https://images.unsplash.com/photo-1589984667390-09eb86d8b8f5?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=9+de+Julio+1185,+Campana", web: "https://www.instagram.com/carniceriajulian" },
+            { name: "Estancias del Sur", cat: "CARNICERIA", discount: 50, img: "https://images.unsplash.com/photo-1607623174012-3e2c3b8d9f8d?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Blvd.+Sarmiento+287,+Campana", web: "https://www.instagram.com/estanciasdelsur" },
+            { name: "Carnicería Sarmiento", cat: "CARNICERIA", discount: 30, img: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Blvd.+Sarmiento+888,+Campana", web: "https://www.instagram.com/carniceriasarmiento" },
+            { name: "Carnicería Melo", cat: "CARNICERIA", discount: 40, img: "https://images.unsplash.com/photo-1516738909773-2d7e7e9d8b2d?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Jean+Jaures,+Campana", web: "https://www.instagram.com/carniceriamelo" },
+            { name: "Frigorífico Criscar", cat: "CARNICERIA", discount: 25, img: "https://images.unsplash.com/photo-1603048714872-9f7e3c2d3f7e?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Rivadavia+1700,+Campana", web: "https://www.instagram.com/frigorificocriscar" },
+            { name: "Kiosk May 1", cat: "KIOSCO", discount: 15, img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Necochea+905,+Campana", web: "https://www.instagram.com/kioskmay1" },
+            { name: "El Kiosco de la Esquina", cat: "KIOSCO", discount: 20, img: "https://images.unsplash.com/photo-1590674899488-8b8f4e7f3d3f?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Rawson+401,+Campana", web: "https://www.instagram.com/elkioscodelaesquina" },
+            { name: "Kiosco del Sol", cat: "KIOSCO", discount: 35, img: "https://images.unsplash.com/photo-1620394780256-9fdfc2f8c5d3?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=San+Martín+999,+Campana", web: "https://www.instagram.com/kioscodelsol" },
+            { name: "Kiosco Las Mellis", cat: "KIOSCO", discount: 10, img: "https://images.unsplash.com/photo-1604719312566-2a3d3e3e68e9?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Francisco+Lavezzari+3,+Campana", web: "https://www.instagram.com/kioscolasmellis" },
+            { name: "Electrónica Proton", cat: "TECH", discount: 50, img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Ing.+Agustín+Rocca+290,+Campana", web: "https://www.instagram.com/electronicaproton" },
+            { name: "Megastore", cat: "TECH", discount: 30, img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+524,+Campana", web: "https://www.instagram.com/megastore_campana" },
+            { name: "Dr. Cell Campana", cat: "TECH", discount: 40, img: "https://images.unsplash.com/photo-1588508065123-6f0d6a5c3f9f?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+320,+Campana", web: "https://www.instagram.com/drcellcampana" },
+            { name: "Campanitas Mora", cat: "MODA", discount: 35, img: "https://images.unsplash.com/photo-1445205170230-053b830c6050?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Barnetche+2119,+Campana", web: "https://www.instagram.com/campanitasmora" },
+            { name: "Lola Mona Indumentaria", cat: "MODA", discount: 45, img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Mitre+1172,+Campana", web: "https://www.instagram.com/lolamonaindumentaria" },
+            { name: "Circle Campana", cat: "MODA", discount: 25, img: "https://images.unsplash.com/photo-1539109136881-3d8f7e8d0b3a?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+1118,+Campana", web: "https://www.instagram.com/circlecampana" },
+            { name: "Reina Juana", cat: "MODA", discount: 20, img: "https://images.unsplash.com/photo-1590399214748-337e44f2c6e4?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+502,+Campana", web: "https://www.instagram.com/reinajuana" },
+            { name: "La Catedral", cat: "FOOD", discount: 30, img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Av.+Int.+Jorge+Ruben+Varela+370,+Campana", web: "https://www.instagram.com/lacatedralcampana" },
+            { name: "Emblema", cat: "FOOD", discount: 40, img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=Blvd.+Sarmiento+101,+Campana", web: "https://www.instagram.com/emblemacampana" },
+            { name: "Kentucky", cat: "FOOD", discount: 15, img: "https://images.unsplash.com/photo-1571091655789-84b2c56ea2a3?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=San+Martín+402,+Campana", web: "https://www.instagram.com/kentuckycampana" },
+            { name: "Anik Campana", cat: "FOOD", discount: 50, img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=9+de+Julio+749,+Campana", web: "https://www.instagram.com/anikcampana" },
+            { name: "McDonald's Campana", cat: "FOOD", discount: 25, img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=RN9+Km.+72.5,+Campana", web: "https://www.instagram.com/mcdonalds_arg" },
+            { name: "Taller Mecánico Campana", cat: "TALLERMECANICO", discount: 40, img: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=taller+mecanico+campana", web: "https://www.instagram.com/tallermecanicocampana" },
+            { name: "Auto Service Rodríguez", cat: "TALLERMECANICO", discount: 30, img: "https://images.unsplash.com/photo-1544636331-8985c7dbe9e5?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=auto+service+rodriguez+campana", web: "https://www.instagram.com/autoservicerodriguez" },
+            { name: "Mecánica Rápida", cat: "TALLERMECANICO", discount: 50, img: "https://images.unsplash.com/photo-1581092160607-36e2b8f0b4d4?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=mecanica+rapida+campana", web: "https://www.instagram.com/mecanicarapida" },
+            { name: "Taller El Pro", cat: "TALLERMECANICO", discount: 20, img: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c7?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=taller+el+pro+campana", web: "https://www.instagram.com/tallerelpro" },
+            { name: "Neumáticos Campana", cat: "TALLERMECANICO", discount: 35, img: "https://images.unsplash.com/photo-1590674899488-8b8f4e7f3d3f?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=neumaticos+campana", web: "https://www.instagram.com/neumaticoscampana" },
+            { name: "Farmacia Pérez", cat: "MEDICINA", discount: 25, img: "https://images.unsplash.com/photo-1580281964126-1d9c2e2f2b9b?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=farmacia+perez+campana", web: "https://www.instagram.com/farmaciaperez" },
+            { name: "Clínica Campana", cat: "MEDICINA", discount: 35, img: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=clinica+campana", web: "https://www.instagram.com/clinicacampana" },
+            { name: "Farmacia del Centro", cat: "MEDICINA", discount: 15, img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=farmacia+centro+campana", web: "https://www.instagram.com/farmaciadelcentro" },
+            { name: "Centro Médico Norte", cat: "MEDICINA", discount: 45, img: "https://images.unsplash.com/photo-1519494026892-80e512f5f3d8?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=centro+medico+norte+campana", web: "https://www.instagram.com/centromediconorte" },
+            { name: "Farmacia de Turno", cat: "MEDICINA", discount: 20, img: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=farmacia+turno+campana", web: "https://www.instagram.com/farmaciadeturno" },
+            { name: "Pelquería Estilo", cat: "BELLEZA", discount: 40, img: "https://images.unsplash.com/photo-1580616295015-9f4a404bde9e?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=peluqueria+campana", web: "https://www.instagram.com/peluqueriaestilo" },
+            { name: "Estética Glam", cat: "BELLEZA", discount: 50, img: "https://images.unsplash.com/photo-1522338242992-e1a5497595f9?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=estetica+campana", web: "https://www.instagram.com/esteticaglam" },
+            { name: "Manicuria & Belleza", cat: "BELLEZA", discount: 25, img: "https://images.unsplash.com/photo-1597220954831-7d90be692ac1?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=manicuria+campana", web: "https://www.instagram.com/manicuriaybelleza" },
+            { name: "Salón de Belleza Luna", cat: "BELLEZA", discount: 35, img: "https://images.unsplash.com/photo-1512290505090-f90d9134154b?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=salon+belleza+campana", web: "https://www.instagram.com/salondebellezaluna" },
+            { name: "Pet Shop Amigos", cat: "PETSHOP", discount: 30, img: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=pet+shop+campana", web: "https://www.instagram.com/petshopamigos" },
+            { name: "Veterinaria Campana", cat: "PETSHOP", discount: 45, img: "https://images.unsplash.com/photo-1560806887-1f3e4dc4d8d7?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=veterinaria+campana", web: "https://www.instagram.com/veterinariacampana" },
+            { name: "Mascotas Feliz", cat: "PETSHOP", discount: 20, img: "https://images.unsplash.com/photo-1552673597-e3e0b5b7f9d0?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=mascotas+campana", web: "https://www.instagram.com/mascotasfeliz" },
+            { name: "Pet Center", cat: "PETSHOP", discount: 35, img: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400", wa: "https://wa.me/543489000000", map: "https://www.google.com/maps/search/?api=1&query=pet+shop+campana", web: "https://www.instagram.com/petcenter_campana" },
         ];
 
         const audio = new (window.AudioContext || window.webkitAudioContext)();
@@ -380,7 +442,7 @@
                         name: item.name, cat: item.cat, img: item.img,
                         promo: `${item.discount}% OFF`,
                         discountCat, tier,
-                        wa: item.wa, map: item.map
+                        wa: item.wa, map: item.map, web: item.web
                     });
                     for(let i=0; i<w; i++) for(let j=0; j<h; j++) map[y+j][x+i] = true;
                 }
@@ -388,7 +450,6 @@
             render();
             fillTickers();
 
-            // Armado ultrarrápido inicial
             let burstMoves = 0;
             const burst = setInterval(() => {
                 for(let i = 0; i < 30; i++) {
@@ -459,15 +520,15 @@
                 let nx = t.x + d.x, ny = t.y + d.y;
                 if(nx >= 0 && nx+t.w <= COLS && ny >= 0 && ny+t.h <= ROWS && !occupied(nx, ny, t.w, t.h)) {
                     t.x = nx; t.y = ny;
-                    el.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                    el.style.transform = `translate(${nx * (CELL_SIZE+GAP)}px, ${ny * (CELL_SIZE+GAP)}px)`;
+                    el.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    const baseTranslate = `translate(${nx * (CELL_SIZE+GAP)}px, ${ny * (CELL_SIZE+GAP)}px)`;
+                    el.style.transform = baseTranslate + (el.classList.contains('enlarged') ? ' scale(1.7)' : '');
                     return true;
                 }
             }
             return false;
         }
 
-        // Movimiento aleatorio periódico
         setInterval(() => {
             const moves = Math.floor(Math.random() * 6) + 3;
             for(let i = 0; i < moves; i++) {
@@ -522,11 +583,19 @@
         }
 
         function updateVisibility() {
+            const hasFilter = activeFilters.cat !== null || activeFilters.discount !== null;
             tiles.forEach(t => {
                 const el = document.getElementById(t.id);
+                if (!el) return;
                 const matchCat = !activeFilters.cat || t.cat === activeFilters.cat;
                 const matchDiscount = !activeFilters.discount || t.discountCat === activeFilters.discount;
-                el.classList.toggle('filtered-out', !(matchCat && matchDiscount));
+                const isVisible = matchCat && matchDiscount;
+
+                el.classList.toggle('filtered-out', !isVisible);
+                el.classList.toggle('enlarged', hasFilter && isVisible);
+
+                const baseTranslate = `translate(${t.x * (CELL_SIZE + GAP)}px, ${t.y * (CELL_SIZE + GAP)}px)`;
+                el.style.transform = baseTranslate + (el.classList.contains('enlarged') ? ' scale(1.7)' : '');
             });
         }
 
@@ -544,8 +613,10 @@
            
             const waBtn = document.getElementById('m-wa');
             const mapBtn = document.getElementById('m-map');
+            const webBtn = document.getElementById('m-web');
             waBtn.onclick = () => window.open(t.wa, '_blank');
             mapBtn.onclick = () => window.open(t.map, '_blank');
+            webBtn.onclick = () => window.open(t.web, '_blank');
            
             document.getElementById('modal-shop').classList.add('active');
         }
@@ -583,6 +654,7 @@
     </script>
 </body>
 </html>
+
 
 
 
