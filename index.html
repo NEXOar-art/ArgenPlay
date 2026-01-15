@@ -46,8 +46,8 @@
             align-items: center;
         }
         .logo-img {
-            height: 100px;
-            width: 100px;
+            height: 80px;
+            width: auto;
         }
         .segmentation-area {
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -76,9 +76,11 @@
         }
         .ig-btn { color: #E4405F; font-size: 1.4rem; }
         .tickers-stack { background: white; border-bottom: 1px solid #ddd; font-size: 0.75rem; }
-        .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; height: 24px; display: flex; align-items: center; }
-        .ticker { display: inline-block; animation: ticker-scroll 45s linear infinite; padding-left: 100%; }
-        .ticker-item { display: inline-block; padding: 0 2rem; font-weight: 600; text-transform: uppercase; }
+        .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; height: 28px; display: flex; align-items: center; }
+        .ticker { display: inline-block; padding-left: 100%; }
+        .t-aviso .ticker { animation: ticker-scroll 90s linear infinite; } /* Mucho más lento para legibilidad */
+        .t-hot .ticker { animation: ticker-scroll 60s linear infinite; } /* Más lento también */
+        .ticker-item { display: inline-block; padding: 0 3rem; font-weight: 600; text-transform: uppercase; }
         @keyframes ticker-scroll { 100% { transform: translateX(-100%); } }
         .t-aviso { background: var(--meli-blue); color: white; }
         .t-hot { background: #ffebeb; color: var(--color-hot); }
@@ -173,6 +175,8 @@
             border-top: 1px solid #eee;
         }
         footer a { color: var(--meli-blue); text-decoration: none; }
+        .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.5); transform: scale(0); animation: ripple-anim 0.6s linear; pointer-events: none; }
+        @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
     </style>
 </head>
 <body class="view-matrix">
@@ -222,6 +226,9 @@
         <button class="btn-filter" onclick="filter('cat', 'SALUD', this)">🏥 Salud</button>
         <button class="btn-filter" onclick="filter('cat', 'GYM', this)">💪 Gym</button>
         <button class="btn-filter" onclick="filter('cat', 'TECNOLOGIA', this)">📱 Tecnología</button>
+        <button class="btn-filter" onclick="filter('cat', 'COMIDA', this)">🍔 Comida</button>
+        <button class="btn-filter" onclick="filter('cat', 'BARES', this)">🍻 Bares</button>
+        <button class="btn-filter" onclick="filter('cat', 'ENTRETENIMIENTO', this)">🎉 Entretenimiento</button>
         <div class="separator"></div>
         <button class="btn-filter green-btn" onclick="filter('discount', 'green', this)">🟢 < 20%</button>
         <button class="btn-filter yellow-btn" onclick="filter('discount', 'yellow', this)">🟡 20-40%</button>
@@ -255,7 +262,7 @@
         <div class="form-modal-content">
             <h3 style="text-align:center; color:var(--meli-blue); margin-bottom:15px;">Publicitar en Campana</h3>
             <p style="text-align:center; font-size:0.8rem; color:#666; margin-bottom:15px;">
-                Sumate a las mejores Carnicerías, Farmacias y Ferreterías de la zona.
+                Sumate a las mejores ofertas de la zona.
             </p>
             <form onsubmit="sendWhatsappForm(event)">
                 <input type="text" id="frm-nombre" class="form-input" placeholder="Nombre del Local" required>
@@ -271,6 +278,9 @@
                     <option value="Salud">Salud</option>
                     <option value="Gym">Gym</option>
                     <option value="Tecnología">Tecnología</option>
+                    <option value="Comida">Comida</option>
+                    <option value="Bares">Bares</option>
+                    <option value="Entretenimiento">Entretenimiento</option>
                     <option value="Otro">Otro</option>
                 </select>
                 <input type="text" id="frm-ubicacion" class="form-input" placeholder="Dirección en Campana" required>
@@ -326,7 +336,13 @@
             { name: "Taller El Rápido", cat: "TALLER_MECANICO", discount: 40, img: "https://images.unsplash.com/photo-1621905252507-b3541bc6ea34?w=400" },
             { name: "Centro Médico Salud", cat: "SALUD", discount: 15, img: "https://images.unsplash.com/photo-1532938911079-1b0c8f3473ed?w=400" },
             { name: "Gym Power", cat: "GYM", discount: 50, img: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400" },
-            { name: "Tecnología Store", cat: "TECNOLOGIA", discount: 35, img: "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=400" }
+            { name: "Tecnología Store", cat: "TECNOLOGIA", discount: 35, img: "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=400" },
+            { name: "Restaurante Sabor", cat: "COMIDA", discount: 35, img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400" },
+            { name: "Pizzería Napoli", cat: "COMIDA", discount: 20, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400" },
+            { name: "Bar El Encuentro", cat: "BARES", discount: 40, img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400" },
+            { name: "Pub Nocturno", cat: "BARES", discount: 25, img: "https://images.unsplash.com/photo-1572116469696-31de0f17cc43?w=400" },
+            { name: "Cine Campana", cat: "ENTRETENIMIENTO", discount: 30, img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400" },
+            { name: "Sala de Juegos Fun", cat: "ENTRETENIMIENTO", discount: 45, img: "https://images.unsplash.com/photo-1549924230-c5b32a11e3d3?w=400" }
         ];
 
         let activeFilters = { cat: null, discount: null, search: '' };
@@ -338,8 +354,22 @@
         }
 
         function setTickers() {
-            document.getElementById('tick-aviso').innerHTML = Array(10).fill('<span class="ticker-item">NUEVAS OFERTAS EN CAMPANA 📍</span>').join('');
-            document.getElementById('tick-hot').innerHTML = Array(10).fill('<span class="ticker-item">🔥 LAS MEJORES PROMOCIONES 🔥</span>').join('');
+            const noticias = [
+                "¡NUEVOS LOCALES SE SUMAN CADA SEMANA!",
+                "OFERTAS EXCLUSIVAS EN CAMPANA",
+                "PUBLICITÁ TU LOCAL GRATIS POR WHATSAPP",
+                "MÁS DE 20 RUBROS DISPONIBLES",
+                "DESCUENTOS HASTA 50% OFF"
+            ];
+            let avisoHTML = '';
+            noticias.forEach(n => avisoHTML += `<span class="ticker-item">${n}</span>`);
+            document.getElementById('tick-aviso').innerHTML = avisoHTML.repeat(12);
+
+            let hotHTML = '';
+            baseData.forEach(local => {
+                hotHTML += `<span class="ticker-item">${local.name.toUpperCase()} - ${local.discount}% OFF</span>`;
+            });
+            document.getElementById('tick-hot').innerHTML = hotHTML.repeat(10);
         }
 
         function toggleViewMode() {
@@ -366,9 +396,7 @@
                     let tier = 'tier-green';
                     if(data.discount >= 20) tier = 'tier-yellow';
                     if(data.discount > 40) tier = 'tier-red';
-                    tiles.push({
-                        id: `tile-${tiles.length}`, x, y, w, h, ...data, tier
-                    });
+                    tiles.push({ id: `tile-${tiles.length}`, x, y, w, h, ...data, tier });
                 }
             }
         }
@@ -381,7 +409,6 @@
             if(viewMode === 'matrix') {
                 const boardWidth = board.parentElement.clientWidth;
                 const cellSize = (boardWidth - (GAP * (COLS - 1))) / COLS;
-              
                 let maxY = 0;
                 displayedTiles.forEach((t, index) => {
                     const el = createTileElement(t, index);
@@ -503,7 +530,7 @@
         function openPrivacyModal() { document.getElementById('privacy-modal').classList.add('active'); }
         function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
 
-        // Movimiento automático de tiles (solo en matriz y sin filtros activos)
+        // Movimiento automático de tiles
         setInterval(() => {
             if(viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search) return;
             const idx1 = Math.floor(Math.random() * displayedTiles.length);
@@ -527,6 +554,7 @@
     </script>
 </body>
 </html>
+
 
 
 
