@@ -46,7 +46,7 @@
             gap: 12px;
         }
         .logo-img {
-            height: 115px;
+            height: 90px;
             width: 80px;
         }
         .logo-text {
@@ -121,7 +121,7 @@
             background: var(--bg-card); border-radius: var(--tile-radius);
             overflow: hidden; cursor: pointer; box-shadow: var(--shadow-soft);
             display: flex; flex-direction: column;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s, z-index 0s;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s, width 0.6s, height 0.6s;
             border: 1px solid #eee;
             transform-origin: center center;
         }
@@ -296,7 +296,7 @@
         <button class="btn-filter" onclick="filter('cat', 'ENTRETENIMIENTO', this)">🎉 Entretenimiento</button>
         <button class="btn-filter" onclick="filter('cat', 'SERVICIOS', this)">🔧 Servicios</button>
         <button class="btn-filter" onclick="filter('cat', 'PAPELERIA', this)">📄 Papelería</button>
-        <button class="btn-filter" onclick="filter('cat', 'PELUQUERIA', this)">✂️ Peluquerías y Barberías</button>
+        <button class="btn-filter" onclick="filter('cat', 'PELUQUERIA_BARBERIA', this)">✂️ Peluquerías y Barberías</button>
         <button class="btn-filter" onclick="filter('cat', 'CORRALON', this)">🏗️ Corralón</button>
         <button class="btn-filter" onclick="filter('cat', 'LAVADERO_AUTOS', this)">🚗 Lavadero de Autos</button>
         <div class="separator"></div>
@@ -362,7 +362,7 @@
                     <option value="Entretenimiento">Entretenimiento</option>
                     <option value="Servicios">Servicios</option>
                     <option value="Papelería">Papelería</option>
-                    <option value="Peluquería y Barbería">Peluquería y Barbería</option>
+                    <option value="Peluquerías y Barberías">Peluquerías y Barberías</option>
                     <option value="Corralón">Corralón</option>
                     <option value="Lavadero de Autos">Lavadero de Autos</option>
                     <option value="Otro">Otro</option>
@@ -418,7 +418,7 @@
     <script>
         const DESKTOP_COLS = 14;
         const MOBILE_COLS = 4;
-        const ROWS = 100;
+        const ROWS = 49;
         const GAP = 4;
         let COLS = window.innerWidth > 800 ? DESKTOP_COLS : MOBILE_COLS;
         let viewMode = 'matrix';
@@ -466,9 +466,9 @@
                     ticker.style.animationPlayState = 'paused';
                     setTimeout(() => {
                         ticker.style.animationPlayState = 'running';
-                    }, 8000); // 8 segundos de pausa
+                    }, 8000);
                 }
-            }, 12000); // cada 12 segundos se elige un ticker al azar para pausar
+            }, 12000);
         }
         function setTickers() {
             const noticias = [
@@ -692,18 +692,14 @@
         function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
         function openShareModal() { document.getElementById('share-modal').classList.add('active'); }
         function closeShareModal() { document.getElementById('share-modal').classList.remove('active'); }
+
+        // NUEVA FUNCIONALIDAD: reshuffle dinámico para cambio de tamaños y posiciones
         setInterval(() => {
             if(viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search) return;
-            const idx1 = Math.floor(Math.random() * displayedTiles.length);
-            const t1 = displayedTiles[idx1];
-            const neighbor = displayedTiles.find(t => t !== t1 && t.w === t1.w && t.h === t1.h && (Math.abs(t.x - t1.x) + Math.abs(t.y - t1.y) === 1));
-            if(neighbor) {
-                const tx = t1.x, ty = t1.y;
-                t1.x = neighbor.x; t1.y = neighbor.y;
-                neighbor.x = tx; neighbor.y = ty;
-                render();
-            }
-        }, 2500);
+            generateMatrix();
+            render();
+        }, 12000); // Cada 12 segundos se regenera completamente la matriz (cambia tamaños y posiciones aleatoriamente)
+
         window.addEventListener('resize', () => {
             COLS = window.innerWidth > 800 ? DESKTOP_COLS : MOBILE_COLS;
             generateMatrix();
@@ -713,6 +709,7 @@
     </script>
 </body>
 </html>
+
 
 
 
