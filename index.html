@@ -299,6 +299,12 @@
         <button class="btn-filter" onclick="filter('cat', 'PELUQUERIA_BARBERIA', this)">✂️ Peluquerías y Barberías</button>
         <button class="btn-filter" onclick="filter('cat', 'CORRALON', this)">🏗️ Corralón</button>
         <button class="btn-filter" onclick="filter('cat', 'LAVADERO_AUTOS', this)">🚗 Lavadero de Autos</button>
+        <button class="btn-filter" onclick="filter('cat', 'COTILLON', this)">🎉 Cotillón</button>
+        <button class="btn-filter" onclick="filter('cat', 'GOMERIA', this)">🛞 Gomería</button>
+        <button class="btn-filter" onclick="filter('cat', 'MAYORISTA', this)">📦 Mayorista</button>
+        <button class="btn-filter" onclick="filter('cat', 'KIOSCO', this)">🏪 Kiosco</button>
+        <button class="btn-filter" onclick="filter('cat', 'ALMACEN', this)">🏪 Almacén</button>
+        <button class="btn-filter" onclick="filter('cat', 'MERCADO', this)">🛒 Mercado</button>
         <div class="separator"></div>
         <button class="btn-filter green-btn" onclick="filter('discount', 'green', this)">🟢 < 20%</button>
         <button class="btn-filter yellow-btn" onclick="filter('discount', 'yellow', this)">🟡 20-40%</button>
@@ -365,6 +371,12 @@
                     <option value="Peluquerías y Barberías">Peluquerías y Barberías</option>
                     <option value="Corralón">Corralón</option>
                     <option value="Lavadero de Autos">Lavadero de Autos</option>
+                    <option value="Cotillón">Cotillón</option>
+                    <option value="Gomería">Gomería</option>
+                    <option value="Mayorista">Mayorista</option>
+                    <option value="Kiosco">Kiosco</option>
+                    <option value="Almacén">Almacén</option>
+                    <option value="Mercado">Mercado</option>
                     <option value="Otro">Otro</option>
                 </select>
                 <input type="text" id="frm-ubicacion" class="form-input" placeholder="Dirección en Campana" required>
@@ -693,12 +705,12 @@
         function openShareModal() { document.getElementById('share-modal').classList.add('active'); }
         function closeShareModal() { document.getElementById('share-modal').classList.remove('active'); }
 
-        // NUEVA FUNCIONALIDAD: reshuffle dinámico para cambio de tamaños y posiciones
+        // Reshuffle dinámico (cambio de tamaños y posiciones)
         setInterval(() => {
             if(viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search) return;
             generateMatrix();
             render();
-        }, 12000); // Cada 12 segundos se regenera completamente la matriz (cambia tamaños y posiciones aleatoriamente)
+        }, 12000);
 
         window.addEventListener('resize', () => {
             COLS = window.innerWidth > 800 ? DESKTOP_COLS : MOBILE_COLS;
@@ -709,6 +721,7 @@
     </script>
 </body>
 </html>
+
 
 
 
