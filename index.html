@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -93,18 +94,6 @@
         }
         .ig-btn { color: #E4405F; font-size: 1.4rem; }
         .share-btn { color: var(--arg-celeste); }
-        .tickers-stack { background: var(--arg-white); border-bottom: 1px solid #ddd; font-size: 0.75rem; }
-        .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; height: 28px; display: flex; align-items: center; }
-        .ticker { display: inline-block; }
-        .t-aviso .ticker { padding-left: 100%; animation: ticker-left 400s linear infinite; }
-        .t-hot .ticker { padding-right: 100%; animation: ticker-right 700s linear infinite; }
-        .t-delivery .ticker { padding-left: 100%; animation: ticker-left 400s linear infinite; }
-        .ticker-item { display: inline-block; padding: 0 3.5rem; font-weight: 600; text-transform: uppercase; }
-        @keyframes ticker-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-        @keyframes ticker-right { 0% { transform: translateX(-100%); } 100% { transform: translateX(0); } }
-        .t-aviso { background: var(--arg-celeste); color: var(--arg-white); }
-        .t-hot { background: #ffebeb; color: var(--color-hot); }
-        .t-delivery { background: var(--arg-white); color: var(--arg-celeste); }
         .filter-bar { overflow-x: auto; white-space: nowrap; padding: 8px 10px; background: var(--arg-white); display: flex; gap: 6px; align-items: center; }
         .btn-filter {
             background: #f0f0f0; border: none; padding: 6px 14px; border-radius: 20px;
@@ -240,6 +229,65 @@
             margin-top: 20px;
             font-weight: 600;
         }
+        /* ==== CARRUSEL ==== */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 400px;
+            background: #f8f8f8;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-item {
+            min-width: 600px;
+            height: 350px;
+            margin: 0 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 12px 18px;
+            font-size: 36px;
+            z-index: 10;
+            border-radius: 50%;
+        }
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .carousel-btn.prev { left: 15px; }
+        .carousel-btn.next { right: 15px; }
+
+
+        /* Responsive para móviles */
+        @media (max-width: 768px) {
+            .carousel {
+                height: 300px;
+            }
+            .carousel-item {
+                min-width: calc(100% - 60px);
+                height: 260px;
+                margin: 0 30px;
+            }
+            .carousel-btn {
+                font-size: 28px;
+                padding: 10px 14px;
+            }
+        }
+
+
         /* ==== POPUP DE ANUNCIO AL CARGAR ==== */
         .announcement-content {
             background: var(--arg-white);
@@ -332,7 +380,7 @@
                     <span>Mercado De Locales</span>
                 </div>
             </div>
-     
+   
             <div class="segmentation-area">
                 <div class="location-badge">
                     <i class="fas fa-map-marker-alt"></i>
@@ -343,7 +391,7 @@
                 <input type="text" id="search-input" placeholder="Buscar carnicería, farmacia..." onkeyup="handleSearch(this.value)">
                 <i class="fas fa-search" style="color:#ccc;"></i>
             </div>
-     
+   
             <div class="right-buttons">
                 <button class="view-toggle-btn" onclick="toggleViewMode()">
                     <i class="fas fa-th-large" id="view-icon"></i>
@@ -357,11 +405,16 @@
             </div>
         </div>
     </header>
-    <div class="tickers-stack">
-        <div class="ticker-wrap t-aviso"><div class="ticker" id="tick-aviso"></div></div>
-        <div class="ticker-wrap t-hot"><div class="ticker" id="tick-hot"></div></div>
-        <div class="ticker-wrap t-delivery"><div class="ticker" id="tick-delivery"></div></div>
+
+
+    <!-- CARRUSEL DE OFERTAS DESTACADAS (reemplaza los antiguos tickers) -->
+    <div class="carousel">
+        <div class="carousel-track"></div>
+        <button class="carousel-btn prev">‹</button>
+        <button class="carousel-btn next">›</button>
     </div>
+
+
     <div class="filter-bar">
         <button class="btn-filter" onclick="resetAll()">Todo</button>
         <button class="btn-filter" onclick="filter('cat', 'CARNICERIA', this)">🥩 Carnicería</button>
@@ -603,11 +656,93 @@
             { name: "Todo Casero", cat: "COMIDA", discount: 10, img: "logo.jpeg", location: "Campana", url: "https://nexoar-art.github.io/ROTISERIA-MALVINAS/", whatsapp: "543489358998", hours: { days: "Lun-Dom", from: "20:00", to: "23:50", sundayClosed: true } },
             { name: "NEXO-Art Paginas Web", cat: "SERVICIOS", discount: 10, img: "NEXO-ART.png", location: " Campana", url: "https://nexoar-art.github.io/NEXO-art/", whatsapp: "543489686939", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
             { name: "Estampados One Love ", cat: "TIENDA", discount: 5, img: "ESTAMPADOS ONE LOVE.png", location: "9 de julio 1381, campana", url: "https://www.instagram.com/estampados_one_love/", whatsapp: "541123106002", hours: { days: "Lun-Sáb", from: "09:00", to: "18:00", sundayClosed: true } },
-             { name: "CV-ATS para Empleos ", cat: "SERVICIOS", discount: 0 , img: "Logo CV-ATS.png", location: " Campana", url: "https://nexoar-art.github.io/CV-ATS/", whatsapp: "543489686939", hours: { days: "Lun-Vier", from: "10:00", to: "18:00", sundayClosed: true } }
+            { name: "CV-ATS para Empleos ", cat: "SERVICIOS", discount: 0 , img: "Logo CV-ATS.png", location: " Campana", url: "https://nexoar-art.github.io/CV-ATS/", whatsapp: "543489686939", hours: { days: "Lun-Vier", from: "10:00", to: "18:00", sundayClosed: true } }
         ];
         let activeFilters = { cat: null, discount: null, search: '' };
 
-        // Funciones para modales
+
+        // === FUNCIONES DE CARRUSEL ===
+        function populateCarousel() {
+            const track = document.querySelector('.carousel-track');
+            track.innerHTML = '';
+
+
+            // Filtrar locales con descuento > 0 y ordenar por mayor descuento
+            const featured = baseData
+                .filter(t => t.discount > 0)
+                .sort((a, b) => b.discount - a.discount);
+
+
+            featured.forEach(t => {
+                let tierColor = '--color-low';
+                if (t.discount >= 20) tierColor = '--color-mid';
+                if (t.discount > 40) tierColor = '--color-hot';
+
+
+                const item = document.createElement('div');
+                item.className = 'carousel-item';
+                item.innerHTML = `
+                    <div style="position:relative;width:100%;height:100%;">
+                        <img src="${t.img}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent 40%);display:flex;flex-direction:column;justify-content:flex-end;padding:30px 20px;color:white;text-align:center;">
+                            <div style="font-size:2rem;font-weight:900;text-shadow:1px 1px 4px black;">${t.name.toUpperCase()}</div>
+                            <div style="font-size:4.5rem;font-weight:900;text-shadow:2px 2px 6px black;color:var(${tierColor});margin-top:10px;">${t.discount}% OFF</div>
+                        </div>
+                    </div>
+                `;
+                // Click → abre WhatsApp del local
+                item.onclick = () => window.open('https://wa.me/' + t.whatsapp, '_blank');
+                track.appendChild(item);
+            });
+
+
+            // Configuración de navegación (dinámica para responsive)
+            const items = document.querySelectorAll('.carousel-item');
+            if (items.length === 0) return;
+
+
+            const itemWidth = items[0].getBoundingClientRect().width;
+            const marginTotal = 30; // 15px left + 15px right (o 60px en mobile)
+            const slideAmount = itemWidth + marginTotal;
+
+
+            let index = 0;
+            const update = () => {
+                track.style.transform = `translateX(-${index * slideAmount}px)`;
+            };
+
+
+            document.querySelector('.carousel-btn.next').onclick = () => {
+                index = (index + 1) % items.length;
+                update();
+            };
+            document.querySelector('.carousel-btn.prev').onclick = () => {
+                index = (index - 1 + items.length) % items.length;
+                update();
+            };
+
+
+            // Auto-advance cada 5 segundos + pausa al hover
+            let autoSlide = setInterval(() => {
+                index = (index + 1) % items.length;
+                update();
+            }, 5000);
+
+
+            document.querySelector('.carousel').addEventListener('mouseenter', () => clearInterval(autoSlide));
+            document.querySelector('.carousel').addEventListener('mouseleave', () => {
+                autoSlide = setInterval(() => {
+                    index = (index + 1) % items.length;
+                    update();
+                }, 5000);
+            });
+
+
+            update();
+        }
+
+
+        // === RESTO DE FUNCIONES ORIGINALES (sin cambios relevantes) ===
         function openFormModal() { document.getElementById('form-modal').classList.add('active'); }
         function closeFormModal() { document.getElementById('form-modal').classList.remove('active'); }
         function openDeliveryModal() { document.getElementById('delivery-modal').classList.add('active'); }
@@ -616,7 +751,6 @@
         function closeShareModal() { document.getElementById('share-modal').classList.remove('active'); }
         function openPrivacyModal() { document.getElementById('privacy-modal').classList.add('active'); }
         function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
-
         function openAnnouncement() {
             document.getElementById('announcement-modal').classList.add('active');
         }
@@ -665,7 +799,7 @@
             const board = document.getElementById('puzzle-board');
             board.innerHTML = '';
             displayedTiles = tiles.filter(t => checkFilter(t));
-     
+   
             if(viewMode === 'matrix') {
                 const boardWidth = board.parentElement.clientWidth;
                 const cellSize = (boardWidth - (GAP * (COLS - 1))) / COLS;
@@ -796,35 +930,6 @@
             const toMinutes = toH * 60 + toM;
             return currentTime >= fromMinutes && currentTime <= toMinutes;
         }
-        function setTickers() {
-            const noticias = [
-                "¡NUEVOS LOCALES SE SUMAN CADA SEMANA!",
-                "OFERTAS EXCLUSIVAS EN CAMPANA",
-                "PUBLICITÁ TU LOCAL Y LLENA EL FORMULARIO",
-                "MÁS DE 20 RUBROS DISPONIBLES",
-                "DESCUENTOS HASTA 50% OFF"
-            ];
-            let avisoHTML = '';
-            noticias.forEach(n => avisoHTML += `<span class="ticker-item">${n}</span>`);
-            document.getElementById('tick-aviso').innerHTML = avisoHTML.repeat(20);
-        
-            let hotHTML = '';
-            baseData.forEach(local => {
-                hotHTML += `<span class="ticker-item">${local.name.toUpperCase()} - ${local.discount}% OFF</span>`;
-            });
-            document.getElementById('tick-hot').innerHTML = hotHTML.repeat(15);
-            const deliveryNoticias = [
-                "¡ARGENTPLAY 50% OFF HASTA EL 28/02/2026!",
-                "PUBLICA TU SERVICIO DE DELIVERY",
-                "TRABAJOS ARTESANALES HECHOS EN CAMPANA",
-                "APOYÁ A LOS ARTESANOS LOCALES",
-                "DELIVERYS RÁPIDOS Y SEGUROS EN TODA LA ZONA",
-                "COMPRÁ LOCAL CON ENVÍO A DOMICILIO"
-            ];
-            let deliveryHTML = '';
-            deliveryNoticias.forEach(n => deliveryHTML += `<span class="ticker-item">${n}</span>`);
-            document.getElementById('tick-delivery').innerHTML = deliveryHTML.repeat(20);
-        }
         function sendWhatsappForm(e) {
             e.preventDefault();
             const n = document.getElementById('frm-nombre').value.trim();
@@ -869,7 +974,7 @@
             render();
         });
         function init() {
-            setTickers();
+            populateCarousel();
             generateMatrix();
             render();
             if (localStorage.getItem(POPUP_SEEN_KEY) !== CURRENT_VERSION) {
@@ -892,6 +997,7 @@
     </script>
 </body>
 </html>
+
 
 
 
