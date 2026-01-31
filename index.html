@@ -296,7 +296,7 @@
         .ticker-wrap {
             display: flex;
             width: 200%;
-            animation: scroll-ticker 90s linear infinite;
+            animation: scroll-ticker 60s linear infinite;
         }
         .ticker-banner:hover .ticker-wrap {
             animation-play-state: paused;
@@ -648,7 +648,7 @@
         </div>
     </div>
     <script>
-        const CURRENT_VERSION = "2.7";
+        const CURRENT_VERSION = "2.8";
         const url = new URL(window.location.href);
         if (url.searchParams.get("v") !== CURRENT_VERSION) {
             url.searchParams.set("v", CURRENT_VERSION);
@@ -1069,6 +1069,7 @@
     </script>
 </body>
 </html>
+
 
 
 
