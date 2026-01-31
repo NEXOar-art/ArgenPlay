@@ -270,7 +270,6 @@
         .carousel-btn.prev { left: 15px; }
         .carousel-btn.next { right: 15px; }
 
-
         /* Responsive para móviles */
         @media (max-width: 768px) {
             .carousel {
@@ -287,6 +286,38 @@
             }
         }
 
+        /* ==== TICKER BANNER (nuevo) ==== */
+        .ticker-banner {
+            background: linear-gradient(to right, #75AADB, #6098cb);
+            overflow: hidden;
+            padding: 14px 0;
+            white-space: nowrap;
+        }
+        .ticker-wrap {
+            display: flex;
+            width: 200%;
+            animation: scroll-ticker 120s linear infinite;
+        }
+        .ticker-banner:hover .ticker-wrap {
+            animation-play-state: paused;
+        }
+        .ticker-items-group {
+            display: flex;
+            align-items: center;
+            gap: 120px;
+            width: 100%;
+            flex-shrink: 0;
+        }
+        .ticker-item {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
+
+        @keyframes scroll-ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
 
         /* ==== POPUP DE ANUNCIO AL CARGAR ==== */
         .announcement-content {
@@ -384,7 +415,7 @@
             <div class="segmentation-area">
                 <div class="location-badge">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Campana, Buenos Aires</span>
+                    <span>Campana, Zárate y Escobar.Buenos Aires</span>
                 </div>
             </div>
             <div class="search-container">
@@ -406,14 +437,20 @@
         </div>
     </header>
 
-
-    <!-- CARRUSEL DE OFERTAS DESTACADAS (reemplaza los antiguos tickers) -->
+    <!-- CARRUSEL DE OFERTAS DESTACADAS -->
     <div class="carousel">
         <div class="carousel-track"></div>
         <button class="carousel-btn prev">‹</button>
         <button class="carousel-btn next">›</button>
     </div>
 
+    <!-- TICKER BANNER DE OFERTAS (nuevo, debajo del carrusel) -->
+    <div class="ticker-banner">
+        <div class="ticker-wrap">
+            <div class="ticker-items-group" id="ticker-group1"></div>
+            <div class="ticker-items-group" id="ticker-group2"></div>
+        </div>
+    </div>
 
     <div class="filter-bar">
         <button class="btn-filter" onclick="resetAll()">Todo</button>
@@ -488,7 +525,7 @@
     <div class="modal" id="exit-intent-modal">
         <div class="exit-intent-content">
             <button class="close-modal" style="color:white;" onclick="closeExitIntent()">&times;</button>
-            <p><strong>¿Querés que miles de personas de Campana vean tu local con las mejores ofertas?</strong></p>
+            <p><strong>¿Querés que miles de personas de Campana, Zárate, Escobar vean tu local con las mejores ofertas?</strong></p>
             <p>¡Publicitá y atraé más clientes!</p>
             <button class="btn-action btn-publicitar" onclick="openFormModal(); closeExitIntent();">
                 Publicitar mi Local Ahora 🚀
@@ -519,7 +556,7 @@
     <div class="modal" id="form-modal" style="background:rgba(0,0,0,0.8);">
         <div class="form-modal-content">
             <button class="close-modal" style="color:#333;" onclick="closeFormModal()">&times;</button>
-            <h3 style="text-align:center; color:var(--arg-celeste); margin-bottom:15px;">🚀 Publicitar Local en Campana</h3>
+            <h3 style="text-align:center; color:var(--arg-celeste); margin-bottom:15px;">🚀 Publicitar Local en Campana, Zárate y Escobar</h3>
             <p style="text-align:center; font-size:0.9rem; color:#666; margin-bottom:20px;">
                 ¡Sumá tu local a las mejores ofertas de la zona! 📈
             </p>
@@ -564,7 +601,7 @@
                     <option value="Salón de Eventos">🎉 Salón de Eventos</option>
                     <option value="Otro">❓ Otro</option>
                 </select>
-                <input type="text" id="frm-ubicacion" class="form-input" placeholder="📍 Dirección en Campana" required>
+                <input type="text" id="frm-ubicacion" class="form-input" placeholder="📍 Dirección" required>
                 <input type="email" id="frm-email" class="form-input" placeholder="📧 E-mail (opcional)">
                 <button type="submit" class="btn-action btn-wa" style="margin-top:20px;">📤 Enviar Solicitud por WhatsApp 🚀</button>
             </form>
@@ -575,7 +612,7 @@
     <div class="modal" id="delivery-modal" style="background:rgba(0,0,0,0.8);">
         <div class="form-modal-content">
             <button class="close-modal" style="color:#333;" onclick="closeDeliveryModal()">&times;</button>
-            <h3 style="text-align:center; color:var(--arg-celeste); margin-bottom:15px;">🚚 Publicar como Delivery en Campana</h3>
+            <h3 style="text-align:center; color:var(--arg-celeste); margin-bottom:15px;">🚚 Publicar como Delivery en Campana, Zárate y Escobar</h3>
             <p style="text-align:center; font-size:0.9rem; color:#666; margin-bottom:20px;">
                 ¡Registrate para ofrecer delivery en la zona! 📦
             </p>
@@ -587,7 +624,7 @@
                     <option value="Auto">🚗 Auto</option>
                     <option value="Camioneta">🚐 Camioneta</option>
                 </select>
-                <input type="text" id="del-direccion" class="form-input" placeholder="📍 Dirección en Campana" required>
+                <input type="text" id="del-direccion" class="form-input" placeholder="📍 Dirección " required>
                 <input type="text" id="del-dni" class="form-input" placeholder="🆔 DNI" required>
                 <input type="email" id="del-email" class="form-input" placeholder="📧 E-mail (opcional)">
                 <button type="submit" class="btn-action btn-wa" style="margin-top:20px;">📤 Enviar Solicitud por WhatsApp 🚀</button>
@@ -656,28 +693,73 @@
             { name: "Todo Casero", cat: "COMIDA", discount: 10, img: "logo.jpeg", location: "Campana", url: "https://nexoar-art.github.io/ROTISERIA-MALVINAS/", whatsapp: "543489358998", hours: { days: "Lun-Dom", from: "20:00", to: "23:50", sundayClosed: true } },
             { name: "NEXO-Art Paginas Web", cat: "SERVICIOS", discount: 10, img: "NEXO-ART.png", location: " Campana", url: "https://nexoar-art.github.io/NEXO-art/", whatsapp: "543489686939", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
             { name: "Estampados One Love ", cat: "TIENDA", discount: 5, img: "ESTAMPADOS ONE LOVE.png", location: "9 de julio 1381, campana", url: "https://www.instagram.com/estampados_one_love/", whatsapp: "541123106002", hours: { days: "Lun-Sáb", from: "09:00", to: "18:00", sundayClosed: true } },
-            { name: "CV-ATS para Empleos ", cat: "SERVICIOS", discount: 0 , img: "Logo CV-ATS.png", location: " Campana", url: "https://nexoar-art.github.io/CV-ATS/", whatsapp: "543489686939", hours: { days: "Lun-Vier", from: "10:00", to: "18:00", sundayClosed: true } }
+            { name: "CV-ATS para Empleos ", cat: "SERVICIOS", discount: 5 , img: "Logo CV-ATS.png", location: " Campana", url: "https://nexoar-art.github.io/CV-ATS/", whatsapp: "543489686939", hours: { days: "Lun-Vier", from: "10:00", to: "18:00", sundayClosed: true } },
+             { name: "HERRERIA INDUSTRIAL WP ", cat: "HERRERIA", discount: 10 , img: "HerreriaWP.jpg", location: "Pedro Martini 825, Zarate", url: "https://www.instagram.com/herreriawp/", whatsapp: "543487455175", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } }
         ];
         let activeFilters = { cat: null, discount: null, search: '' };
 
+        // === FUNCIONES DEL TICKER (nuevo) ===
+        function createTickerItem(container, text, colorStyle = '') {
+            const span = document.createElement('span');
+            span.className = 'ticker-item';
+            span.textContent = text;
+            if (colorStyle) span.style.color = colorStyle;
+            container.appendChild(span);
+        }
+
+        function populateTicker() {
+            const group1 = document.getElementById('ticker-group1');
+            const group2 = document.getElementById('ticker-group2');
+            group1.innerHTML = '';
+
+            const now = new Date();
+            const hour = now.getHours();
+            const isPeakFoodTime = (hour >= 11 && hour <= 14) || (hour >= 18 && hour <= 23) || hour <= 2; // almuerzo, cena y madrugada
+
+            const offers = baseData
+                .filter(t => t.discount > 0)
+                .sort((a, b) => b.discount - a.discount);
+
+            offers.forEach(t => {
+                let prefix = '🏪 ';
+                let suffix = '';
+                let colorStyle = '';
+
+                if (t.discount > 40) colorStyle = 'var(--color-hot)';
+                else if (t.discount >= 20) colorStyle = 'var(--color-mid)';
+
+                const isFoodRelated = ['COMIDA', 'BARES', 'HELADERIA', 'PANADERIA'].includes(t.cat);
+
+                if (isFoodRelated && isPeakFoodTime) {
+                    prefix = '🔥🍴 AHORA: ';
+                    suffix = ' ¡Vení ya!';
+                    // Duplicamos para mayor énfasis en horarios pico
+                    createTickerItem(group1, prefix + t.name + ' - ' + t.discount + '% OFF' + suffix, colorStyle);
+                    createTickerItem(group1, prefix + t.name + ' - ' + t.discount + '% OFF' + suffix, colorStyle);
+                } else if (isFoodRelated) {
+                    prefix = '🍔 ';
+                    createTickerItem(group1, prefix + t.name + ' - ' + t.discount + '% OFF', colorStyle);
+                } else {
+                    createTickerItem(group1, prefix + t.name + ' - ' + t.discount + '% OFF', colorStyle);
+                }
+            });
+
+            group2.innerHTML = group1.innerHTML; // duplicado para loop infinito
+        }
 
         // === FUNCIONES DE CARRUSEL ===
         function populateCarousel() {
             const track = document.querySelector('.carousel-track');
             track.innerHTML = '';
 
-
-            // Filtrar locales con descuento > 0 y ordenar por mayor descuento
             const featured = baseData
                 .filter(t => t.discount > 0)
                 .sort((a, b) => b.discount - a.discount);
-
 
             featured.forEach(t => {
                 let tierColor = '--color-low';
                 if (t.discount >= 20) tierColor = '--color-mid';
                 if (t.discount > 40) tierColor = '--color-hot';
-
 
                 const item = document.createElement('div');
                 item.className = 'carousel-item';
@@ -690,27 +772,21 @@
                         </div>
                     </div>
                 `;
-                // Click → abre WhatsApp del local
                 item.onclick = () => window.open('https://wa.me/' + t.whatsapp, '_blank');
                 track.appendChild(item);
             });
 
-
-            // Configuración de navegación (dinámica para responsive)
             const items = document.querySelectorAll('.carousel-item');
             if (items.length === 0) return;
 
-
             const itemWidth = items[0].getBoundingClientRect().width;
-            const marginTotal = 30; // 15px left + 15px right (o 60px en mobile)
+            const marginTotal = 30;
             const slideAmount = itemWidth + marginTotal;
-
 
             let index = 0;
             const update = () => {
                 track.style.transform = `translateX(-${index * slideAmount}px)`;
             };
-
 
             document.querySelector('.carousel-btn.next').onclick = () => {
                 index = (index + 1) % items.length;
@@ -721,13 +797,10 @@
                 update();
             };
 
-
-            // Auto-advance cada 5 segundos + pausa al hover
             let autoSlide = setInterval(() => {
                 index = (index + 1) % items.length;
                 update();
             }, 5000);
-
 
             document.querySelector('.carousel').addEventListener('mouseenter', () => clearInterval(autoSlide));
             document.querySelector('.carousel').addEventListener('mouseleave', () => {
@@ -737,12 +810,10 @@
                 }, 5000);
             });
 
-
             update();
         }
 
-
-        // === RESTO DE FUNCIONES ORIGINALES (sin cambios relevantes) ===
+        // === RESTO DE FUNCIONES ORIGINALES ===
         function openFormModal() { document.getElementById('form-modal').classList.add('active'); }
         function closeFormModal() { document.getElementById('form-modal').classList.remove('active'); }
         function openDeliveryModal() { document.getElementById('delivery-modal').classList.add('active'); }
@@ -962,12 +1033,12 @@
             window.open(`https://api.whatsapp.com/send?phone=+543489686939&text=${encodeURIComponent(text)}`, '_blank');
             closeDeliveryModal();
         }
-        // Reshuffle automático cada 12 segundos
+        // Reshuffle automático cada 10 segundos
         setInterval(() => {
             if(viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search) return;
             generateMatrix();
             render();
-        }, 12000);
+        }, 10000);
         window.addEventListener('resize', () => {
             COLS = window.innerWidth > 800 ? DESKTOP_COLS : MOBILE_COLS;
             generateMatrix();
@@ -975,6 +1046,7 @@
         });
         function init() {
             populateCarousel();
+            populateTicker(); // nuevo
             generateMatrix();
             render();
             if (localStorage.getItem(POPUP_SEEN_KEY) !== CURRENT_VERSION) {
@@ -997,6 +1069,7 @@
     </script>
 </body>
 </html>
+
 
 
 
