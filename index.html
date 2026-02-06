@@ -324,7 +324,7 @@
         }
         .ticker-wrap {
             display: flex;
-            animation: marquee 10s linear infinite;
+            animation: marquee 9s linear infinite;
         }
         .ticker-wrap:hover {
             animation-play-state: paused;
@@ -616,7 +616,7 @@
         </div>
     </div>
     <script>
-        const CURRENT_VERSION = "4.2";
+        const CURRENT_VERSION = "4.3";
         const url = new URL(window.location.href);
         if (url.searchParams.get("v") !== CURRENT_VERSION) {
             url.searchParams.set("v", CURRENT_VERSION);
@@ -1001,6 +1001,7 @@
     </script>
 </body>
 </html>
+
 
 
 
