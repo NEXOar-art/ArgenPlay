@@ -47,7 +47,7 @@
             gap: 12px;
         }
         .logo-img {
-            height: 115px;
+            height: 120px;
             width: 80px;
         }
         .logo-text {
@@ -69,7 +69,11 @@
             flex: 1;
             text-align: center;
         }
-        .location-badge {
+        .location-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .location-btn {
             display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--arg-white);
             font-size: 1.1rem;
             background: rgba(255,255,255,0.2);
@@ -77,8 +81,43 @@
             border-radius: 30px;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            border: none;
+            cursor: pointer;
         }
-        .location-badge i { font-size: 1.3rem; }
+        .location-btn i { font-size: 1.3rem; }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            list-style: none;
+            padding: 10px 0;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        .dropdown-menu li {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .dropdown-menu li:hover {
+            background: rgba(175,206,236,0.4);
+        }
         .search-container {
             flex: 1; background: rgba(255,255,255,0.92); border-radius: 12px; min-width: 220px;
             display: flex; align-items: center; padding: 10px 16px;
@@ -286,9 +325,9 @@
             transition: transform 0.5s ease;
         }
         .carousel-item {
-            min-width: 1100px;
+            min-width: 360px;
             height: 380px;
-            margin: 0 15px;
+            margin: 0 40px;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow-soft);
@@ -309,9 +348,6 @@
             border-radius: 50%;
             backdrop-filter: blur(8px);
         }
-
-
-        /* TICKER ESTILO WALL STREET CORPORATIVO */
         .ticker-banner {
             background: rgba(10, 15, 30, 0.92);
             color: var(--arg-white);
@@ -324,7 +360,7 @@
         }
         .ticker-wrap {
             display: flex;
-            animation: marquee 9s linear infinite;
+            animation: marquee 20s linear infinite;
         }
         .ticker-wrap:hover {
             animation-play-state: paused;
@@ -357,12 +393,15 @@
             color: rgba(255,255,255,0.4);
             font-weight: 300;
         }
+        .admin-ticker-message {
+            font-weight: 900;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-
-
         .announcement-content, .exit-intent-content, .privacy-content {
             background: rgba(255,255,255,0.88);
             border-radius: 20px;
@@ -380,11 +419,12 @@
         }
         .exit-intent-content { background: rgba(255,59,59,0.92); color: white; }
         @media (max-width: 768px) {
-            .carousel { height: 320px; }
-            .carousel-item { min-width: calc(100% - 60px); height: 280px; margin: 0 30px; }
+            .carousel { height: 340px; }
+            .carousel-item { min-width: calc(100% - 80px); height: 300px; margin: 0 40px; }
             .ticker-item { font-size: 0.9rem; gap: 15px; }
             .ticker-discount { font-size: 1.2rem; }
             .ticker-items-group { gap: 50px; }
+            .admin-ticker-message { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -398,18 +438,26 @@
                     <span>Mercado De Locales</span>
                 </div>
             </div>
- 
             <div class="segmentation-area">
-                <div class="location-badge">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Campana, Zárate y Escobar. Buenos Aires</span>
+                <div class="location-dropdown">
+                    <button class="location-btn" onclick="toggleDropdown()">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="location-text">Todas las localidades</span>
+                        <i class="fas fa-chevron-down" id="chevron"></i>
+                    </button>
+                    <ul class="dropdown-menu" id="dropdown-menu">
+                        <li onclick="selectLocation(null, 'Todas las localidades')">Todas las localidades</li>
+                        <li onclick="selectLocation('Campana', 'Campana')">Campana</li>
+                        <li onclick="selectLocation('Zárate', 'Zárate')">Zárate</li>
+                        <li onclick="selectLocation('Escobar', 'Escobar')">Escobar</li>
+                        <li onclick="selectLocation('Pilar', 'Pilar')">Pilar</li>
+                    </ul>
                 </div>
             </div>
             <div class="search-container">
                 <input type="text" id="search-input" placeholder="Buscar carnicería, farmacia..." onkeyup="handleSearch(this.value)">
                 <i class="fas fa-search" style="color:#ccc;"></i>
             </div>
- 
             <div class="right-buttons">
                 <button class="view-toggle-btn" onclick="toggleViewMode()">
                     <i class="fas fa-th-large" id="view-icon"></i>
@@ -432,6 +480,12 @@
         <div class="ticker-wrap">
             <div class="ticker-items-group" id="ticker-group1"></div>
             <div class="ticker-items-group" id="ticker-group2"></div>
+        </div>
+    </div>
+    <div class="ticker-banner" style="background: linear-gradient(90deg, rgba(255,59,59,0.92), rgba(255,100,0,0.92));">
+        <div class="ticker-wrap">
+            <div class="ticker-items-group" id="admin-ticker-group1"></div>
+            <div class="ticker-items-group" id="admin-ticker-group2"></div>
         </div>
     </div>
     <div class="filter-bar">
@@ -471,6 +525,9 @@
         <button class="btn-filter" onclick="filter('cat', 'HERRERIA', this)">🔨 Herrería</button>
         <button class="btn-filter" onclick="filter('cat', 'CAMPING', this)">🏕️ Camping</button>
         <button class="btn-filter" onclick="filter('cat', 'SALON_DE_EVENTOS', this)">🎉 Salón de Eventos</button>
+        <button class="btn-filter" onclick="filter('cat', 'CANCHAS', this)">⚽ Canchas</button>
+        <button class="btn-filter" onclick="filter('cat', 'INMOBILIARIA', this)">🏠 Inmobiliaria</button>
+        <button class="btn-filter" onclick="filter('cat', 'ALQUILER', this)">🔑 Alquiler</button>
         <div class="separator"></div>
         <button class="btn-filter green-btn" onclick="filter('discount', 'green', this)">🟢 < 20%</button>
         <button class="btn-filter yellow-btn" onclick="filter('discount', 'yellow', this)">🟡 20-40%</button>
@@ -492,7 +549,8 @@
             <i class="fas fa-truck"></i> Publicar Delivery
         </div>
     </div>
-    <!-- Todos los modales -->
+
+    <!-- Modales completos (sin cambios) -->
     <div class="modal" id="announcement-modal">
         <div class="announcement-content">
             <button class="close-modal" onclick="closeAnnouncement()">&times;</button>
@@ -615,14 +673,26 @@
             <button class="btn-action btn-url" onclick="closePrivacyModal()">Cerrar</button>
         </div>
     </div>
+
     <script>
-        const CURRENT_VERSION = "4.4";
+        const CURRENT_VERSION = "4.5";
+
+        const safeStorage = {
+            get(key) {
+                try { return localStorage.getItem(key); } catch (e) { return null; }
+            },
+            set(key, value) {
+                try { localStorage.setItem(key, value); } catch (e) { /* ignorar */ }
+            }
+        };
+
         const url = new URL(window.location.href);
         if (url.searchParams.get("v") !== CURRENT_VERSION) {
             url.searchParams.set("v", CURRENT_VERSION);
-            localStorage.setItem("appVersion", CURRENT_VERSION);
+            safeStorage.set("appVersion", CURRENT_VERSION);
             window.location.replace(url.href);
         }
+
         const POPUP_SEEN_KEY = "popupSeen";
         const DESKTOP_COLS = 14;
         const MOBILE_COLS = 4;
@@ -633,6 +703,7 @@
         let tiles = [];
         let displayedTiles = [];
         let currentGalleryIndex = 0;
+
         const baseData = [
             { name: "Carnicería El Toro", cat: "CARNICERIA", discount: 45, img: "https://images.unsplash.com/photo-1607623174012-3e2c3b8d9f8d?w=400", location: "Av. Rivadavia 1234, Campana", url: "https://instagram.com/carniceriaeltoro", whatsapp: "543489111111", hours: { days: "Lun-Sáb", from: "08:00", to: "20:00", sundayClosed: true } },
             { name: "Farmacia Central", cat: "FARMACIA", discount: 15, img: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400", location: "Belgrano 567, Campana", url: "https://instagram.com/farmaciacentral", whatsapp: "543489222222", hours: { days: "Lun-Dom", from: "08:00", to: "22:00", sundayClosed: false } },
@@ -663,14 +734,93 @@
             { name: "Estampados One Love ", cat: "TIENDA", discount: 5, img: "ESTAMPADOS ONE LOVE.png", location: "9 de julio 1381, campana", url: "https://www.instagram.com/estampados_one_love/", whatsapp: "541123106002", hours: { days: "Lun-Sáb", from: "09:00", to: "18:00", sundayClosed: true } },
             { name: "CV-ATS para Empleos ", cat: "SERVICIOS", discount: 5 , img: "Logo CV-ATS.png", location: " Campana", url: "https://nexoar-art.github.io/CV-ATS/", whatsapp: "543489686939", hours: { days: "Lun-Vier", from: "10:00", to: "18:00", sundayClosed: true } },
             { name: "HERRERIA INDUSTRIAL WP ", cat: "HERRERIA", discount: 10 , img: "HerreiaWP.png", location: "Pedro Martini 825, Zarate", url: "https://www.instagram.com/herreriawp/", whatsapp: "543487455175", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } },
-            { name: "REPUESTOS DEL AUTOMOTOR PEKA", cat: "AUTOPARTES", discount: 5 , img: "automotor peka.png", location: "V. Demarco 350, Campana", url: "https://nexoar-art.github.io/PEKA-AUTOPART/", whatsapp: "543489524324", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } }        ];
-        let activeFilters = { cat: null, discount: null, search: '' };
+            { name: "REPUESTOS DEL AUTOMOTOR PEKA", cat: "AUTOPARTES", discount: 5 , img: "automotor peka.png", location: "V. Demarco 350, Campana", url: "https://nexoar-art.github.io/PEKA-AUTOPART/", whatsapp: "543489524324", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } }
+        ];
 
+        const adminTickerMessages = [
+            "¡NUEVOS LOCALES SE SUMAN CADA SEMANA! 🔥",
+            "SEGUINOS EN INSTAGRAM @mercadodelocales PARA MÁS OFERTAS EXCLUSIVAS",
+            "¡MÁS DE 50 LOCALES CON DESCUENTOS IMPERDIBLES EN TU ZONA!",
+            "OFERTA FLASH: HASTA 60% OFF EN LOCALES SELECCIONADOS ESTE FIN DE SEMANA",
+            "¡PUBLICITÁ TU LOCAL Y LLEGÁ A MILES DE CLIENTES!"
+        ];
+
+        let activeFilters = { cat: null, discount: null, search: '', location: null };
+
+        function getCity(t) {
+            if (!t.location) return 'Campana';
+            const lowerLocation = t.location.toLowerCase().trim();
+            if (lowerLocation.includes('zarat')) return 'Zárate';
+            if (lowerLocation.includes('escobar')) return 'Escobar';
+            if (lowerLocation.includes('pilar')) return 'Pilar';
+            if (lowerLocation.includes('campana')) return 'Campana';
+            return 'Campana';
+        }
+
+        function generateMatrix() {
+            tiles = [];
+            let map = Array(ROWS).fill().map(() => Array(COLS).fill(false));
+            let dataIdx = 0;
+            for(let y = 0; y < ROWS; y++) {
+                for(let x = 0; x < COLS; x++) {
+                    if(map[y][x]) continue;
+                    let isBig = Math.random() > 0.85;
+                    let w = (isBig && x < COLS-1) ? 2 : 1;
+                    let h = (isBig && y < ROWS-1) ? 2 : 1;
+                    if(w === 2 && h === 2 && (map[y][x+1] || map[y+1][x] || map[y+1][x+1])) { w=1; h=1; }
+                    for(let i = 0; i < h; i++) for(let j = 0; j < w; j++) map[y+i][x+j] = true;
+                    const data = baseData[dataIdx % baseData.length];
+                    dataIdx++;
+                    let tier = 'tier-green';
+                    if(data.discount >= 20) tier = 'tier-yellow';
+                    if(data.discount > 40) tier = 'tier-red';
+                    tiles.push({ id: `tile-${tiles.length}`, x, y, w, h, ...data, tier });
+                }
+            }
+        }
+
+        function createTileElement(t, index) {
+            const el = document.createElement('div');
+            el.className = `tile ${t.tier}`;
+            el.innerHTML = `
+                <img src="${t.img}" class="tile-img" loading="lazy">
+                <div class="tile-info">
+                    <div class="tile-title">${t.name}</div>
+                    <div class="tile-discount">${t.discount}% OFF</div>
+                </div>
+            `;
+            el.onclick = (e) => {
+                const circle = document.createElement('span');
+                const d = Math.max(el.clientWidth, el.clientHeight);
+                circle.style.width = circle.style.height = `${d}px`;
+                circle.style.left = `${e.clientX - el.getBoundingClientRect().left - d/2}px`;
+                circle.style.top = `${e.clientY - el.getBoundingClientRect().top - d/2}px`;
+                circle.classList.add('ripple');
+                el.appendChild(circle);
+                setTimeout(() => circle.remove(), 600);
+                openGallery(index);
+            };
+            return el;
+        }
+
+        function checkFilter(t) {
+            if(activeFilters.cat && t.cat !== activeFilters.cat) return false;
+            if(activeFilters.discount === 'green' && t.discount >= 20) return false;
+            if(activeFilters.discount === 'yellow' && (t.discount < 20 || t.discount > 40)) return false;
+            if(activeFilters.discount === 'red' && t.discount <= 40) return false;
+            if(activeFilters.location && getCity(t) !== activeFilters.location) return false;
+            if(activeFilters.search) {
+                const term = activeFilters.search.toLowerCase();
+                if(!t.name.toLowerCase().includes(term) && !t.cat.toLowerCase().includes(term)) return false;
+            }
+            return true;
+        }
 
         function populateCarousel() {
             const track = document.querySelector('.carousel-track');
             track.innerHTML = '';
-            const featured = baseData.filter(t => t.discount > 0).sort((a, b) => b.discount - a.discount);
+            let featured = displayedTiles.filter(t => t.discount > 0);
+            featured.sort(() => Math.random() - 0.5);
             featured.forEach(t => {
                 let tierColor = '--color-low';
                 if (t.discount >= 20) tierColor = '--color-mid';
@@ -691,7 +841,7 @@
             });
             const items = document.querySelectorAll('.carousel-item');
             if (items.length === 0) return;
-            const itemWidth = items[0].getBoundingClientRect().width + 30;
+            const itemWidth = items[0].getBoundingClientRect().width + 80;
             let index = 0;
             const update = () => {
                 track.style.transform = `translateX(-${index * itemWidth}px)`;
@@ -718,36 +868,18 @@
             update();
         }
 
-
         function populateTicker() {
             const group1 = document.getElementById('ticker-group1');
             const group2 = document.getElementById('ticker-group2');
             group1.innerHTML = '';
             group2.innerHTML = '';
-
-
-            const offers = baseData
-                .filter(t => t.discount > 0)
-                .sort((a, b) => b.discount - a.discount);
-
-
+            let offers = displayedTiles.filter(t => t.discount > 0);
+            offers.sort(() => Math.random() - 0.5);
             offers.forEach(t => {
-                const discountColor = t.discount > 40 ? 'var(--color-hot)' :
-                                     t.discount >= 20 ? 'var(--color-mid)' :
-                                     'var(--color-low)';
-
-
-                const isPeakFoodTime = (new Date().getHours() >= 11 && new Date().getHours() <= 14) ||
-                                       (new Date().getHours() >= 18 && new Date().getHours() <= 23) ||
-                                       new Date().getHours() <= 2;
-
-
+                const discountColor = t.discount > 40 ? 'var(--color-hot)' : t.discount >= 20 ? 'var(--color-mid)' : 'var(--color-low)';
+                const isPeakFoodTime = (new Date().getHours() >= 11 && new Date().getHours() <= 14) || (new Date().getHours() >= 18 && new Date().getHours() <= 23) || new Date().getHours() <= 2;
                 const prefix = ['COMIDA', 'BARES', 'HELADERIA', 'PANADERIA'].includes(t.cat) && isPeakFoodTime ? '🔥 ' : '';
-
-
                 const waFormatted = '+54 ' + t.whatsapp.slice(2).replace(/(\d{4})(\d{6})/, '$1 $2');
-
-
                 const item = document.createElement('div');
                 item.className = 'ticker-item';
                 item.innerHTML = `
@@ -761,52 +893,23 @@
                 `;
                 group1.appendChild(item);
             });
-
-
             group2.innerHTML = group1.innerHTML;
         }
 
+        function populateAdminTicker() {
+            const group1 = document.getElementById('admin-ticker-group1');
+            const group2 = document.getElementById('admin-ticker-group2');
+            group1.innerHTML = '';
+            group2.innerHTML = '';
+            adminTickerMessages.forEach(msg => {
+                const item = document.createElement('div');
+                item.className = 'ticker-item';
+                item.innerHTML = `<span class="admin-ticker-message">${msg}</span>`;
+                group1.appendChild(item);
+            });
+            group2.innerHTML = group1.innerHTML;
+        }
 
-        function openFormModal() { document.getElementById('form-modal').classList.add('active'); }
-        function closeFormModal() { document.getElementById('form-modal').classList.remove('active'); }
-        function openDeliveryModal() { document.getElementById('delivery-modal').classList.add('active'); }
-        function closeDeliveryModal() { document.getElementById('delivery-modal').classList.remove('active'); }
-        function openShareModal() { document.getElementById('share-modal').classList.add('active'); }
-        function closeShareModal() { document.getElementById('share-modal').classList.remove('active'); }
-        function openPrivacyModal() { document.getElementById('privacy-modal').classList.add('active'); }
-        function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
-        function openAnnouncement() { document.getElementById('announcement-modal').classList.add('active'); }
-        function closeAnnouncement() { document.getElementById('announcement-modal').classList.remove('active'); localStorage.setItem(POPUP_SEEN_KEY, CURRENT_VERSION); }
-        function openExitIntent() { document.getElementById('exit-intent-modal').classList.add('active'); }
-        function closeExitIntent() { document.getElementById('exit-intent-modal').classList.remove('active'); }
-        function declineExitIntent() { closeExitIntent(); localStorage.setItem('exitIntentShown', 'true'); }
-        function toggleViewMode() {
-            viewMode = viewMode === 'matrix' ? 'list' : 'matrix';
-            document.body.className = viewMode === 'list' ? 'view-list' : 'view-matrix';
-            document.getElementById('view-icon').className = viewMode === 'list' ? 'fas fa-th' : 'fas fa-th-large';
-            render();
-        }
-        function generateMatrix() {
-            tiles = [];
-            let map = Array(ROWS).fill().map(() => Array(COLS).fill(false));
-            let dataIdx = 0;
-            for(let y = 0; y < ROWS; y++) {
-                for(let x = 0; x < COLS; x++) {
-                    if(map[y][x]) continue;
-                    let isBig = Math.random() > 0.85;
-                    let w = (isBig && x < COLS-1) ? 2 : 1;
-                    let h = (isBig && y < ROWS-1) ? 2 : 1;
-                    if(w === 2 && h === 2 && (map[y][x+1] || map[y+1][x] || map[y+1][x+1])) { w=1; h=1; }
-                    for(let i = 0; i < h; i++) for(let j = 0; j < w; j++) map[y+i][x+j] = true;
-                    const data = baseData[dataIdx % baseData.length];
-                    dataIdx++;
-                    let tier = 'tier-green';
-                    if(data.discount >= 20) tier = 'tier-yellow';
-                    if(data.discount > 40) tier = 'tier-red';
-                    tiles.push({ id: `tile-${tiles.length}`, x, y, w, h, ...data, tier });
-                }
-            }
-        }
         function render() {
             const board = document.getElementById('puzzle-board');
             board.innerHTML = '';
@@ -829,41 +932,65 @@
                 board.style.height = 'auto';
                 displayedTiles.forEach((t, index) => board.appendChild(createTileElement(t, index)));
             }
+            populateCarousel();
+            populateTicker();
+            populateAdminTicker();
         }
-        function createTileElement(t, index) {
-            const el = document.createElement('div');
-            el.className = `tile ${t.tier}`;
-            el.innerHTML = `
-                <img src="${t.img}" class="tile-img" loading="lazy">
-                <div class="tile-info">
-                    <div class="tile-title">${t.name}</div>
-                    <div class="tile-discount">${t.discount}% OFF</div>
-                </div>
-            `;
-            el.onclick = (e) => {
-                const circle = document.createElement('span');
-                const d = Math.max(el.clientWidth, el.clientHeight);
-                circle.style.width = circle.style.height = `${d}px`;
-                circle.style.left = `${e.clientX - el.getBoundingClientRect().left - d/2}px`;
-                circle.style.top = `${e.clientY - el.getBoundingClientRect().top - d/2}px`;
-                circle.classList.add('ripple');
-                el.appendChild(circle);
-                setTimeout(() => circle.remove(), 600);
-                openGallery(index);
-            };
-            return el;
+
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdown-menu');
+            menu.classList.toggle('active');
+            const chevron = document.getElementById('chevron');
+            chevron.classList.toggle('fa-chevron-down');
+            chevron.classList.toggle('fa-chevron-up');
         }
-        function checkFilter(t) {
-            if(activeFilters.cat && t.cat !== activeFilters.cat) return false;
-            if(activeFilters.discount === 'green' && t.discount >= 20) return false;
-            if(activeFilters.discount === 'yellow' && (t.discount < 20 || t.discount > 40)) return false;
-            if(activeFilters.discount === 'red' && t.discount <= 40) return false;
-            if(activeFilters.search) {
-                const term = activeFilters.search.toLowerCase();
-                if(!t.name.toLowerCase().includes(term) && !t.cat.toLowerCase().includes(term)) return false;
+
+        function selectLocation(city, text) {
+            activeFilters.location = city;
+            document.getElementById('location-text').innerText = text;
+            toggleDropdown();
+            render();
+        }
+
+        document.addEventListener('click', (e) => {
+            const dropdown = document.querySelector('.location-dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdown-menu').classList.remove('active');
+                const chevron = document.getElementById('chevron');
+                if (!chevron.classList.contains('fa-chevron-down')) {
+                    chevron.classList.add('fa-chevron-down');
+                    chevron.classList.remove('fa-chevron-up');
+                }
             }
-            return true;
+        });
+
+        function openFormModal() { document.getElementById('form-modal').classList.add('active'); }
+        function closeFormModal() { document.getElementById('form-modal').classList.remove('active'); }
+        function openDeliveryModal() { document.getElementById('delivery-modal').classList.add('active'); }
+        function closeDeliveryModal() { document.getElementById('delivery-modal').classList.remove('active'); }
+        function openShareModal() { document.getElementById('share-modal').classList.add('active'); }
+        function closeShareModal() { document.getElementById('share-modal').classList.remove('active'); }
+        function openPrivacyModal() { document.getElementById('privacy-modal').classList.add('active'); }
+        function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
+        function openAnnouncement() { document.getElementById('announcement-modal').classList.add('active'); }
+        function closeAnnouncement() {
+            document.getElementById('announcement-modal').classList.remove('active');
+            safeStorage.set(POPUP_SEEN_KEY, CURRENT_VERSION);
         }
+        function openExitIntent() { document.getElementById('exit-intent-modal').classList.add('active'); }
+        function closeExitIntent() { document.getElementById('exit-intent-modal').classList.remove('active'); }
+        function declineExitIntent() {
+            closeExitIntent();
+            safeStorage.set('exitIntentShown', 'true');
+        }
+
+        function toggleViewMode() {
+            viewMode = viewMode === 'matrix' ? 'list' : 'matrix';
+            document.body.className = viewMode === 'list' ? 'view-list' : 'view-matrix';
+            document.getElementById('view-icon').className = viewMode === 'list' ? 'fas fa-th' : 'fas fa-th-large';
+            render();
+        }
+
         function filter(type, val, btn) {
             if(activeFilters[type] === val) {
                 activeFilters[type] = null;
@@ -875,25 +1002,32 @@
             }
             render();
         }
+
         function handleSearch(val) { activeFilters.search = val; render(); }
+
         function resetAll() {
-            activeFilters = {cat: null, discount: null, search: ''};
+            activeFilters = {cat: null, discount: null, search: '', location: null};
             document.getElementById('search-input').value = '';
+            document.getElementById('location-text').innerText = 'Todas las localidades';
             document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
             render();
         }
+
         function openGallery(idx) {
             currentGalleryIndex = idx;
             updateGallery();
             document.getElementById('gallery-modal').classList.add('active');
         }
+
         function closeGallery() {
             document.getElementById('gallery-modal').classList.remove('active');
         }
+
         function navGallery(dir) {
             currentGalleryIndex = (currentGalleryIndex + dir + displayedTiles.length) % displayedTiles.length;
             updateGallery();
         }
+
         function updateGallery() {
             const t = displayedTiles[currentGalleryIndex];
             const now = new Date();
@@ -930,6 +1064,7 @@
                 </div>
             `;
         }
+
         function isLocalOpen(local) {
             const now = new Date();
             const day = now.getDay();
@@ -941,6 +1076,7 @@
             const toMinutes = toH * 60 + toM;
             return currentTime >= fromMinutes && currentTime <= toMinutes;
         }
+
         function sendWhatsappForm(e) {
             e.preventDefault();
             const n = document.getElementById('frm-nombre').value.trim();
@@ -953,6 +1089,7 @@
             window.open(`https://api.whatsapp.com/send?phone=+543489686939&text=${encodeURIComponent(text)}`, '_blank');
             closeFormModal();
         }
+
         function sendDeliveryWhatsappForm(e) {
             e.preventDefault();
             const nombre = document.getElementById('del-nombre').value.trim();
@@ -966,25 +1103,26 @@
             window.open(`https://api.whatsapp.com/send?phone=+543489686939&text=${encodeURIComponent(text)}`, '_blank');
             closeDeliveryModal();
         }
+
         setInterval(() => {
-            if(viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search) return;
+            if(viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search || activeFilters.location) return;
             generateMatrix();
             render();
         }, 10000);
+
         window.addEventListener('resize', () => {
             COLS = window.innerWidth > 800 ? DESKTOP_COLS : MOBILE_COLS;
             generateMatrix();
             render();
         });
+
         function init() {
-            populateCarousel();
-            populateTicker();
             generateMatrix();
             render();
-            if (localStorage.getItem(POPUP_SEEN_KEY) !== CURRENT_VERSION) {
+            if (safeStorage.get(POPUP_SEEN_KEY) !== CURRENT_VERSION) {
                 openAnnouncement();
             }
-            if (!localStorage.getItem('exitIntentShown')) {
+            if (!safeStorage.get('exitIntentShown')) {
                 let hasInteracted = false;
                 document.addEventListener('click', () => hasInteracted = true, { once: true });
                 window.addEventListener('scroll', () => {
@@ -997,10 +1135,12 @@
                 });
             }
         }
+
         init();
     </script>
 </body>
 </html>
+
 
 
 
