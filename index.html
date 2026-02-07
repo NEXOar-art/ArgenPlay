@@ -576,7 +576,7 @@
             </button>
         </div>
     </div>
-    <!-- MODAL DE COMPARTIR MEJORADO (tarjeta más bonita y con mejor experiencia de usuario) -->
+    <!-- MODAL DE COMPARTIR (la imagen QR ahora usa exactamente el archivo que indicaste) -->
     <div class="modal" id="share-modal">
         <button class="close-modal" onclick="closeShareModal()">&times;</button>
         <div class="share-modal-content">
@@ -680,7 +680,7 @@
         </div>
     </div>
     <script>
-        const CURRENT_VERSION = "4.6";
+        const CURRENT_VERSION = "4.7";
         const safeStorage = {
             get(key) {
                 try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -1132,7 +1132,6 @@
     </script>
 </body>
 </html>
-
 
 
 
