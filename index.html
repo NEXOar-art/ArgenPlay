@@ -47,7 +47,7 @@
             gap: 12px;
         }
         .logo-img {
-            height: 120px;
+            height: 125px;
             width: 80px;
         }
         .logo-text {
@@ -305,13 +305,16 @@
         @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
         .share-modal-content {
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             background: rgba(255,255,255,0.88);
             border-radius: 20px;
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
             border: 1px solid rgba(255,255,255,0.4);
             box-shadow: var(--shadow-hover);
+            max-width: 380px;
+            width: 90%;
+            margin: 0 auto;
         }
         .carousel {
             position: relative;
@@ -549,7 +552,6 @@
             <i class="fas fa-truck"></i> Publicar Delivery
         </div>
     </div>
-
     <!-- Modales completos (sin cambios) -->
     <div class="modal" id="announcement-modal">
         <div class="announcement-content">
@@ -574,11 +576,15 @@
             </button>
         </div>
     </div>
+    <!-- MODAL DE COMPARTIR MEJORADO (tarjeta más bonita y con mejor experiencia de usuario) -->
     <div class="modal" id="share-modal">
         <button class="close-modal" onclick="closeShareModal()">&times;</button>
         <div class="share-modal-content">
-            <img src="MERCADO DE LOCALES QR.png" alt="QR Code ArgentPlay.online">
-            <p>¡Escaneá y compartí ArgentPlay.online con tus amigos!</p>
+            <h2 style="color:var(--arg-celeste); margin-bottom:20px;">¡Compartí ArgentPlay.online!</h2>
+            <img src="MERCADO DE LOCALES QR.png" alt="QR Code ArgentPlay.online" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
+            <p style="font-size:1rem; margin:15px 0;">Escaneá el QR o compartí el enlace con tus amigos</p>
+            <button class="btn-action btn-url" onclick="copyToClipboard()">📋 Copiar enlace</button>
+            <a class="btn-action btn-wa" id="wa-share-link" target="_blank">📱 Compartir por WhatsApp</a>
         </div>
     </div>
     <div class="modal" id="gallery-modal">
@@ -673,10 +679,8 @@
             <button class="btn-action btn-url" onclick="closePrivacyModal()">Cerrar</button>
         </div>
     </div>
-
     <script>
-        const CURRENT_VERSION = "4.5";
-
+        const CURRENT_VERSION = "4.6";
         const safeStorage = {
             get(key) {
                 try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -685,14 +689,12 @@
                 try { localStorage.setItem(key, value); } catch (e) { /* ignorar */ }
             }
         };
-
         const url = new URL(window.location.href);
         if (url.searchParams.get("v") !== CURRENT_VERSION) {
             url.searchParams.set("v", CURRENT_VERSION);
             safeStorage.set("appVersion", CURRENT_VERSION);
             window.location.replace(url.href);
         }
-
         const POPUP_SEEN_KEY = "popupSeen";
         const DESKTOP_COLS = 14;
         const MOBILE_COLS = 4;
@@ -703,7 +705,6 @@
         let tiles = [];
         let displayedTiles = [];
         let currentGalleryIndex = 0;
-
         const baseData = [
             { name: "Carnicería El Toro", cat: "CARNICERIA", discount: 45, img: "https://images.unsplash.com/photo-1607623174012-3e2c3b8d9f8d?w=400", location: "Av. Rivadavia 1234, Campana", url: "https://instagram.com/carniceriaeltoro", whatsapp: "543489111111", hours: { days: "Lun-Sáb", from: "08:00", to: "20:00", sundayClosed: true } },
             { name: "Farmacia Central", cat: "FARMACIA", discount: 15, img: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400", location: "Belgrano 567, Campana", url: "https://instagram.com/farmaciacentral", whatsapp: "543489222222", hours: { days: "Lun-Dom", from: "08:00", to: "22:00", sundayClosed: false } },
@@ -736,7 +737,6 @@
             { name: "HERRERIA INDUSTRIAL WP ", cat: "HERRERIA", discount: 10 , img: "HerreiaWP.png", location: "Pedro Martini 825, Zarate", url: "https://www.instagram.com/herreriawp/", whatsapp: "543487455175", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } },
             { name: "REPUESTOS DEL AUTOMOTOR PEKA", cat: "AUTOPARTES", discount: 5 , img: "automotor peka.png", location: "V. Demarco 350, Campana", url: "https://nexoar-art.github.io/PEKA-AUTOPART/", whatsapp: "543489524324", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } }
         ];
-
         const adminTickerMessages = [
             "¡NUEVOS LOCALES SE SUMAN CADA SEMANA! 🔥",
             "SEGUINOS EN INSTAGRAM @mercadodelocales PARA MÁS OFERTAS EXCLUSIVAS",
@@ -744,9 +744,7 @@
             "OFERTA FLASH: HASTA 60% OFF EN LOCALES SELECCIONADOS ESTE FIN DE SEMANA",
             "¡PUBLICITÁ TU LOCAL Y LLEGÁ A MILES DE CLIENTES!"
         ];
-
         let activeFilters = { cat: null, discount: null, search: '', location: null };
-
         function getCity(t) {
             if (!t.location) return 'Campana';
             const lowerLocation = t.location.toLowerCase().trim();
@@ -756,7 +754,6 @@
             if (lowerLocation.includes('campana')) return 'Campana';
             return 'Campana';
         }
-
         function generateMatrix() {
             tiles = [];
             let map = Array(ROWS).fill().map(() => Array(COLS).fill(false));
@@ -778,7 +775,6 @@
                 }
             }
         }
-
         function createTileElement(t, index) {
             const el = document.createElement('div');
             el.className = `tile ${t.tier}`;
@@ -802,7 +798,6 @@
             };
             return el;
         }
-
         function checkFilter(t) {
             if(activeFilters.cat && t.cat !== activeFilters.cat) return false;
             if(activeFilters.discount === 'green' && t.discount >= 20) return false;
@@ -815,7 +810,6 @@
             }
             return true;
         }
-
         function populateCarousel() {
             const track = document.querySelector('.carousel-track');
             track.innerHTML = '';
@@ -867,7 +861,6 @@
             });
             update();
         }
-
         function populateTicker() {
             const group1 = document.getElementById('ticker-group1');
             const group2 = document.getElementById('ticker-group2');
@@ -895,7 +888,6 @@
             });
             group2.innerHTML = group1.innerHTML;
         }
-
         function populateAdminTicker() {
             const group1 = document.getElementById('admin-ticker-group1');
             const group2 = document.getElementById('admin-ticker-group2');
@@ -909,7 +901,6 @@
             });
             group2.innerHTML = group1.innerHTML;
         }
-
         function render() {
             const board = document.getElementById('puzzle-board');
             board.innerHTML = '';
@@ -936,7 +927,6 @@
             populateTicker();
             populateAdminTicker();
         }
-
         function toggleDropdown() {
             const menu = document.getElementById('dropdown-menu');
             menu.classList.toggle('active');
@@ -944,14 +934,12 @@
             chevron.classList.toggle('fa-chevron-down');
             chevron.classList.toggle('fa-chevron-up');
         }
-
         function selectLocation(city, text) {
             activeFilters.location = city;
             document.getElementById('location-text').innerText = text;
             toggleDropdown();
             render();
         }
-
         document.addEventListener('click', (e) => {
             const dropdown = document.querySelector('.location-dropdown');
             if (!dropdown.contains(e.target)) {
@@ -963,13 +951,10 @@
                 }
             }
         });
-
         function openFormModal() { document.getElementById('form-modal').classList.add('active'); }
         function closeFormModal() { document.getElementById('form-modal').classList.remove('active'); }
         function openDeliveryModal() { document.getElementById('delivery-modal').classList.add('active'); }
         function closeDeliveryModal() { document.getElementById('delivery-modal').classList.remove('active'); }
-        function openShareModal() { document.getElementById('share-modal').classList.add('active'); }
-        function closeShareModal() { document.getElementById('share-modal').classList.remove('active'); }
         function openPrivacyModal() { document.getElementById('privacy-modal').classList.add('active'); }
         function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
         function openAnnouncement() { document.getElementById('announcement-modal').classList.add('active'); }
@@ -983,14 +968,12 @@
             closeExitIntent();
             safeStorage.set('exitIntentShown', 'true');
         }
-
         function toggleViewMode() {
             viewMode = viewMode === 'matrix' ? 'list' : 'matrix';
             document.body.className = viewMode === 'list' ? 'view-list' : 'view-matrix';
             document.getElementById('view-icon').className = viewMode === 'list' ? 'fas fa-th' : 'fas fa-th-large';
             render();
         }
-
         function filter(type, val, btn) {
             if(activeFilters[type] === val) {
                 activeFilters[type] = null;
@@ -1002,9 +985,7 @@
             }
             render();
         }
-
         function handleSearch(val) { activeFilters.search = val; render(); }
-
         function resetAll() {
             activeFilters = {cat: null, discount: null, search: '', location: null};
             document.getElementById('search-input').value = '';
@@ -1012,22 +993,18 @@
             document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
             render();
         }
-
         function openGallery(idx) {
             currentGalleryIndex = idx;
             updateGallery();
             document.getElementById('gallery-modal').classList.add('active');
         }
-
         function closeGallery() {
             document.getElementById('gallery-modal').classList.remove('active');
         }
-
         function navGallery(dir) {
             currentGalleryIndex = (currentGalleryIndex + dir + displayedTiles.length) % displayedTiles.length;
             updateGallery();
         }
-
         function updateGallery() {
             const t = displayedTiles[currentGalleryIndex];
             const now = new Date();
@@ -1064,7 +1041,6 @@
                 </div>
             `;
         }
-
         function isLocalOpen(local) {
             const now = new Date();
             const day = now.getDay();
@@ -1076,7 +1052,6 @@
             const toMinutes = toH * 60 + toM;
             return currentTime >= fromMinutes && currentTime <= toMinutes;
         }
-
         function sendWhatsappForm(e) {
             e.preventDefault();
             const n = document.getElementById('frm-nombre').value.trim();
@@ -1089,7 +1064,6 @@
             window.open(`https://api.whatsapp.com/send?phone=+543489686939&text=${encodeURIComponent(text)}`, '_blank');
             closeFormModal();
         }
-
         function sendDeliveryWhatsappForm(e) {
             e.preventDefault();
             const nombre = document.getElementById('del-nombre').value.trim();
@@ -1104,18 +1078,37 @@
             closeDeliveryModal();
         }
 
+        // NUEVAS FUNCIONES PARA EL MODAL DE COMPARTIR
+        function openShareModal() {
+            document.getElementById('share-modal').classList.add('active');
+            const shareText = "¡Mirá las mejores ofertas de locales en Campana, Zárate y zona! 🔥 Descuentos imperdibles en ArgentPlay.online";
+            const shareUrl = window.location.href;
+            const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + "\n\n" + shareUrl)}`;
+            document.getElementById('wa-share-link').href = waUrl;
+        }
+        function closeShareModal() {
+            document.getElementById('share-modal').classList.remove('active');
+        }
+        function copyToClipboard() {
+            navigator.clipboard.writeText(window.location.href)
+                .then(() => {
+                    alert("¡Enlace copiado al portapapeles! 📋");
+                })
+                .catch(() => {
+                    prompt("No se pudo copiar automáticamente. Copiá manualmente:", window.location.href);
+                });
+        }
+
         setInterval(() => {
             if(viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search || activeFilters.location) return;
             generateMatrix();
             render();
         }, 10000);
-
         window.addEventListener('resize', () => {
             COLS = window.innerWidth > 800 ? DESKTOP_COLS : MOBILE_COLS;
             generateMatrix();
             render();
         });
-
         function init() {
             generateMatrix();
             render();
@@ -1135,11 +1128,11 @@
                 });
             }
         }
-
         init();
     </script>
 </body>
 </html>
+
 
 
 
