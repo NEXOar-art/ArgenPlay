@@ -47,7 +47,7 @@
             gap: 12px;
         }
         .logo-img {
-            height: 125px;
+            height: 120px;
             width: 80px;
         }
         .logo-text {
@@ -282,6 +282,21 @@
             transition: transform 0.3s;
         }
         .fab-pub:hover { transform: scale(1.05); }
+
+        /* BOTÓN NOTICIAS */
+        .news-fab {
+            background: rgba(255, 152, 0, 0.94);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+        }
+        @keyframes subtle-glow {
+            0% { box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4); }
+            50% { box-shadow: 0 10px 30px rgba(255, 152, 0, 0.7); }
+            100% { box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4); }
+        }
+        .news-fab {
+            animation: subtle-glow 4s ease-in-out infinite;
+        }
+
         .form-modal-content {
             background: rgba(255,255,255,0.88); padding: 25px; border-radius: 20px;
             width: 90%; max-width: 400px; margin: auto; position: relative;
@@ -316,40 +331,34 @@
             width: 90%;
             margin: 0 auto;
         }
+        /* CARRUSEL ESTILO MERCADO LIBRE: 1220x400px MÁXIMO, ALTA CALIDAD, MÁS LENTO */
         .carousel {
             position: relative;
             overflow: hidden;
             width: 100%;
-            height: 420px;
+            max-width: 1220px;
+            height: 400px;
+            margin: 20px auto;
             background: transparent;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
         }
         .carousel-track {
             display: flex;
-            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+            transition: transform 1s ease;
         }
         .carousel-item {
-            min-width: 360px;
-            height: 380px;
-            margin: 0 40px;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
+            min-width: 100%;
+            width: 100%;
+            height: 100%;
             flex-shrink: 0;
+            margin: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: none;
             cursor: pointer;
-        }
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            padding: 12px 18px;
-            font-size: 36px;
-            z-index: 10;
-            border-radius: 50%;
-            backdrop-filter: blur(8px);
         }
         .ticker-banner {
             background: rgba(10, 15, 30, 0.92);
@@ -363,7 +372,7 @@
         }
         .ticker-wrap {
             display: flex;
-            animation: marquee 20s linear infinite;
+            animation: marquee 15s linear infinite;
         }
         .ticker-wrap:hover {
             animation-play-state: paused;
@@ -421,9 +430,17 @@
             border: 1px solid rgba(255,255,255,0.4);
         }
         .exit-intent-content { background: rgba(255,59,59,0.92); color: white; }
+        @media (max-width: 1280px) {
+            .carousel {
+                max-width: 100%;
+                margin: 15px 10px;
+                border-radius: 8px;
+            }
+        }
         @media (max-width: 768px) {
-            .carousel { height: 340px; }
-            .carousel-item { min-width: calc(100% - 80px); height: 300px; margin: 0 40px; }
+            .carousel {
+                height: 300px;
+            }
             .ticker-item { font-size: 0.9rem; gap: 15px; }
             .ticker-discount { font-size: 1.2rem; }
             .ticker-items-group { gap: 50px; }
@@ -474,10 +491,9 @@
             </div>
         </div>
     </header>
+    <!-- CARRUSEL ESTILO MERCADO LIBRE -->
     <div class="carousel">
         <div class="carousel-track"></div>
-        <button class="carousel-btn prev">‹</button>
-        <button class="carousel-btn next">›</button>
     </div>
     <div class="ticker-banner">
         <div class="ticker-wrap">
@@ -545,6 +561,9 @@
         <p style="margin-top:10px;font-size:0.75rem;color:#999;">© 2026 Mercado de Locales - Campana</p>
     </footer>
     <div class="fab-container">
+        <div class="fab-pub news-fab" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfmPQj06Quq3c43nl5IPjJiAKO0QOJbV-VPhMZng9BP1l3m7Q/viewform?usp=dialog', '_blank')">
+            <i class="fas fa-bell"></i> Noticias ArgentPlay
+        </div>
         <div class="fab-pub" onclick="openFormModal()">
             <i class="fas fa-bullhorn"></i> Publicita tu Local
         </div>
@@ -552,7 +571,7 @@
             <i class="fas fa-truck"></i> Publicar Delivery
         </div>
     </div>
-    <!-- Modales completos (sin cambios) -->
+    <!-- Modales -->
     <div class="modal" id="announcement-modal">
         <div class="announcement-content">
             <button class="close-modal" onclick="closeAnnouncement()">&times;</button>
@@ -576,12 +595,11 @@
             </button>
         </div>
     </div>
-    <!-- MODAL DE COMPARTIR (la imagen QR ahora usa exactamente el archivo que indicaste) -->
     <div class="modal" id="share-modal">
         <button class="close-modal" onclick="closeShareModal()">&times;</button>
         <div class="share-modal-content">
             <h2 style="color:var(--arg-celeste); margin-bottom:20px;">¡Compartí ArgentPlay.online!</h2>
-            <img src="MERCADO DE  LOCALES QR.png" alt="QR Code ArgentPlay.online" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
+            <img src="MERCADO DE LOCALES QR.png" alt="QR Code ArgentPlay.online" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
             <p style="font-size:1rem; margin:15px 0;">Escaneá el QR o compartí el enlace con tus amigos</p>
             <button class="btn-action btn-url" onclick="copyToClipboard()">📋 Copiar enlace</button>
             <a class="btn-action btn-wa" id="wa-share-link" target="_blank">📱 Compartir por WhatsApp</a>
@@ -680,7 +698,7 @@
         </div>
     </div>
     <script>
-        const CURRENT_VERSION = "4.9";
+        const CURRENT_VERSION = "5.0";
         const safeStorage = {
             get(key) {
                 try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -706,30 +724,30 @@
         let displayedTiles = [];
         let currentGalleryIndex = 0;
         const baseData = [
-            { name: "Carnicería El Toro", cat: "CARNICERIA", discount: 45, img: "https://images.unsplash.com/photo-1607623174012-3e2c3b8d9f8d?w=400", location: "Av. Rivadavia 1234, Campana", url: "https://instagram.com/carniceriaeltoro", whatsapp: "543489111111", hours: { days: "Lun-Sáb", from: "08:00", to: "20:00", sundayClosed: true } },
-            { name: "Farmacia Central", cat: "FARMACIA", discount: 15, img: "https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400", location: "Belgrano 567, Campana", url: "https://instagram.com/farmaciacentral", whatsapp: "543489222222", hours: { days: "Lun-Dom", from: "08:00", to: "22:00", sundayClosed: false } },
-            { name: "Ferretería Industrial", cat: "FERRETERIA", discount: 25, img: "https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=400", location: "San Martín 890, Campana", url: "https://instagram.com/ferreteriaindustrial", whatsapp: "543489333333", hours: { days: "Lun-Vie", from: "09:00", to: "18:00", sundayClosed: true } },
-            { name: "Heladería Grid", cat: "HELADERIA", discount: 30, img: "https://images.unsplash.com/photo-1576506295286-5cda18df43e7?w=400", location: "Roca 456, Campana", url: "https://instagram.com/heladeriagrid", whatsapp: "543489444444", hours: { days: "Lun-Dom", from: "10:00", to: "23:00", sundayClosed: false } },
-            { name: "Carnicería Julian", cat: "CARNICERIA", discount: 10, img: "https://images.unsplash.com/photo-1560781290-7dc94c0f8f4f?w=400", location: "Mitre 789, Campana", url: "https://instagram.com/carniceriajulian", whatsapp: "543489555555", hours: { days: "Lun-Sáb", from: "08:00", to: "20:00", sundayClosed: true } },
-            { name: "Farmacia Nueva", cat: "FARMACIA", discount: 5, img: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=400", location: "9 de Julio 321, Campana", url: "https://instagram.com/farmacianueva", whatsapp: "543489666666", hours: { days: "Lun-Dom", from: "00:00", to: "23:59", sundayClosed: false } },
-            { name: "Herramientas Pro", cat: "FERRETERIA", discount: 50, img: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=400", location: "Sarmiento 654, Campana", url: "https://instagram.com/herramientaspro", whatsapp: "543489777777", hours: { days: "Lun-Vie", from: "08:30", to: "17:30", sundayClosed: true } },
-            { name: "Helados Artesanales", cat: "HELADERIA", discount: 18, img: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400", location: "Alberdi 987, Campana", url: "https://instagram.com/heladosartesanales", whatsapp: "543489888888", hours: { days: "Lun-Dom", from: "12:00", to: "00:00", sundayClosed: false } },
-            { name: "El Rey de la Carne", cat: "CARNICERIA", discount: 22, img: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400", location: "Castelli 234, Campana", url: "https://instagram.com/elreydelacarne", whatsapp: "543489999999", hours: { days: "Lun-Sáb", from: "07:00", to: "21:00", sundayClosed: true } },
-            { name: "Farmacia Del Pueblo", cat: "FARMACIA", discount: 42, img: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=400", location: "Rivadavia 567, Campana", url: "https://instagram.com/farmaciadelpueblo", whatsapp: "543489000000", hours: { days: "Lun-Dom", from: "08:00", to: "22:00", sundayClosed: false } },
-            { name: "Panadería La Espiga", cat: "PANADERIA", discount: 30, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400", location: "Balcarce 890, Campana", url: "https://instagram.com/panaderialaespiga", whatsapp: "543489112233", hours: { days: "Lun-Dom", from: "06:00", to: "22:00", sundayClosed: false } },
-            { name: "Verdulería Fresca", cat: "VERDULERIA", discount: 25, img: "https://images.unsplash.com/photo-1610348726304-b1c5e6f984e6?w=400", location: "Lavalle 123, Campana", url: "https://instagram.com/verduleriafresca", whatsapp: "543489223344", hours: { days: "Lun-Sáb", from: "07:00", to: "20:00", sundayClosed: true } },
-            { name: "Taller El Rápido", cat: "TALLER_MECANICO", discount: 40, img: "https://images.unsplash.com/photo-1621905252507-b3541bc6ea34?w=400", location: "Roca 456, Campana", url: "https://instagram.com/tallerelrapido", whatsapp: "543489334455", hours: { days: "Lun-Vie", from: "08:00", to: "18:00", sundayClosed: true } },
-            { name: "Centro Médico Salud", cat: "SALUD", discount: 15, img: "https://images.unsplash.com/photo-1532938911079-1b0c8f3473ed?w=400", location: "San Martín 789, Campana", url: "https://instagram.com/centromedicosaud", whatsapp: "543489445566", hours: { days: "Lun-Vie", from: "08:00", to: "20:00", sundayClosed: true } },
-            { name: "Gym Power", cat: "GYM", discount: 50, img: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400", location: "Belgrano 321, Campana", url: "https://instagram.com/gympower", whatsapp: "543489556677", hours: { days: "Lun-Dom", from: "06:00", to: "23:00", sundayClosed: false } },
-            { name: "Tecnología Store", cat: "TECNOLOGIA", discount: 35, img: "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=400", location: "Mitre 654, Campana", url: "https://instagram.com/tecnologiastore", whatsapp: "543489667788", hours: { days: "Lun-Sáb", from: "10:00", to: "20:00", sundayClosed: true } },
-            { name: "Restaurante Sabor", cat: "COMIDA", discount: 35, img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400", location: "Av. 6 de Julio 111, Campana", url: "https://instagram.com/restaurantesabor", whatsapp: "543489778899", hours: { days: "Lun-Dom", from: "12:00", to: "23:00", sundayClosed: false } },
-            { name: "Pizzería Napoli", cat: "COMIDA", discount: 20, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400", location: "25 de Mayo 222, Campana", url: "https://instagram.com/pizzerianapoli", whatsapp: "543489889900", hours: { days: "Lun-Dom", from: "19:00", to: "00:00", sundayClosed: false } },
-            { name: "Bar El Encuentro", cat: "BARES", discount: 40, img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400", location: "Rivadavia 333, Campana", url: "https://instagram.com/barelencuentro", whatsapp: "543489990011", hours: { days: "Lun-Dom", from: "18:00", to: "04:00", sundayClosed: false } },
-            { name: "Pub Nocturno", cat: "BARES", discount: 25, img: "https://images.unsplash.com/photo-1572116469696-31de0f17cc43?w=400", location: "Castelli 444, Campana", url: "https://instagram.com/pubnocturno", whatsapp: "543489001122", hours: { days: "Jue-Dom", from: "20:00", to: "05:00", sundayClosed: false } },
-            { name: "Cine Campana", cat: "ENTRETENIMIENTO", discount: 30, img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400", location: "Centro Cultural, Campana", url: "https://instagram.com/cinecampana", whatsapp: "543489112233", hours: { days: "Lun-Dom", from: "14:00", to: "23:00", sundayClosed: false } },
-            { name: "Sala de Juegos Fun", cat: "ENTRETENIMIENTO", discount: 45, img: "https://images.unsplash.com/photo-1549924230-c5b32a11e3d3?w=400", location: "Shopping Campana", url: "https://instagram.com/saladejuegosfun", whatsapp: "543489223344", hours: { days: "Lun-Dom", from: "10:00", to: "22:00", sundayClosed: false } },
-            { name: "Lavandería Express", cat: "SERVICIOS", discount: 30, img: "https://images.unsplash.com/photo-1604176354204-9268737828e4?w=400", location: "Av. Principal 999, Campana", url: "https://instagram.com/lavanderiaexpress", whatsapp: "543489123456", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
-            { name: "Peluquería Style", cat: "SERVICIOS", discount: 25, img: "https://images.unsplash.com/photo-1562322140-8baeececf3e2?w=400", location: "Centro, Campana", url: "https://instagram.com/peluqueriastyle", whatsapp: "543489654321", hours: { days: "Lun-Sáb", from: "09:00", to: "20:00", sundayClosed: true } },
+            { name: "Carnicería El Toro", cat: "CARNICERIA", discount: 45, img: "https://images.unsplash.com/photo-1607623174012-3e2c3b8d9f8d", location: "Av. Rivadavia 1234, Campana", url: "https://instagram.com/carniceriaeltoro", whatsapp: "543489111111", hours: { days: "Lun-Sáb", from: "08:00", to: "20:00", sundayClosed: true } },
+            { name: "Farmacia Central", cat: "FARMACIA", discount: 15, img: "https://images.unsplash.com/photo-1585435557343-3b092031a831", location: "Belgrano 567, Campana", url: "https://instagram.com/farmaciacentral", whatsapp: "543489222222", hours: { days: "Lun-Dom", from: "08:00", to: "22:00", sundayClosed: false } },
+            { name: "Ferretería Industrial", cat: "FERRETERIA", discount: 25, img: "https://images.unsplash.com/photo-1581235720704-06d3acfcb36f", location: "San Martín 890, Campana", url: "https://instagram.com/ferreteriaindustrial", whatsapp: "543489333333", hours: { days: "Lun-Vie", from: "09:00", to: "18:00", sundayClosed: true } },
+            { name: "Heladería Grid", cat: "HELADERIA", discount: 30, img: "https://images.unsplash.com/photo-1576506295286-5cda18df43e7", location: "Roca 456, Campana", url: "https://instagram.com/heladeriagrid", whatsapp: "543489444444", hours: { days: "Lun-Dom", from: "10:00", to: "23:00", sundayClosed: false } },
+            { name: "Carnicería Julian", cat: "CARNICERIA", discount: 10, img: "https://images.unsplash.com/photo-1560781290-7dc94c0f8f4f", location: "Mitre 789, Campana", url: "https://instagram.com/carniceriajulian", whatsapp: "543489555555", hours: { days: "Lun-Sáb", from: "08:00", to: "20:00", sundayClosed: true } },
+            { name: "Farmacia Nueva", cat: "FARMACIA", discount: 5, img: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926", location: "9 de Julio 321, Campana", url: "https://instagram.com/farmacianueva", whatsapp: "543489666666", hours: { days: "Lun-Dom", from: "00:00", to: "23:59", sundayClosed: false } },
+            { name: "Herramientas Pro", cat: "FERRETERIA", discount: 50, img: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc", location: "Sarmiento 654, Campana", url: "https://instagram.com/herramientaspro", whatsapp: "543489777777", hours: { days: "Lun-Vie", from: "08:30", to: "17:30", sundayClosed: true } },
+            { name: "Helados Artesanales", cat: "HELADERIA", discount: 18, img: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a", location: "Alberdi 987, Campana", url: "https://instagram.com/heladosartesanales", whatsapp: "543489888888", hours: { days: "Lun-Dom", from: "12:00", to: "00:00", sundayClosed: false } },
+            { name: "El Rey de la Carne", cat: "CARNICERIA", discount: 22, img: "https://images.unsplash.com/photo-1542838132-92c53300491e", location: "Castelli 234, Campana", url: "https://instagram.com/elreydelacarne", whatsapp: "543489999999", hours: { days: "Lun-Sáb", from: "07:00", to: "21:00", sundayClosed: true } },
+            { name: "Farmacia Del Pueblo", cat: "FARMACIA", discount: 42, img: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88", location: "Rivadavia 567, Campana", url: "https://instagram.com/farmaciadelpueblo", whatsapp: "543489000000", hours: { days: "Lun-Dom", from: "08:00", to: "22:00", sundayClosed: false } },
+            { name: "Panadería La Espiga", cat: "PANADERIA", discount: 30, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff", location: "Balcarce 890, Campana", url: "https://instagram.com/panaderialaespiga", whatsapp: "543489112233", hours: { days: "Lun-Dom", from: "06:00", to: "22:00", sundayClosed: false } },
+            { name: "Verdulería Fresca", cat: "VERDULERIA", discount: 25, img: "https://images.unsplash.com/photo-1610348726304-b1c5e6f984e6", location: "Lavalle 123, Campana", url: "https://instagram.com/verduleriafresca", whatsapp: "543489223344", hours: { days: "Lun-Sáb", from: "07:00", to: "20:00", sundayClosed: true } },
+            { name: "Taller El Rápido", cat: "TALLER_MECANICO", discount: 40, img: "https://images.unsplash.com/photo-1621905252507-b3541bc6ea34", location: "Roca 456, Campana", url: "https://instagram.com/tallerelrapido", whatsapp: "543489334455", hours: { days: "Lun-Vie", from: "08:00", to: "18:00", sundayClosed: true } },
+            { name: "Centro Médico Salud", cat: "SALUD", discount: 15, img: "https://images.unsplash.com/photo-1532938911079-1b0c8f3473ed", location: "San Martín 789, Campana", url: "https://instagram.com/centromedicosaud", whatsapp: "543489445566", hours: { days: "Lun-Vie", from: "08:00", to: "20:00", sundayClosed: true } },
+            { name: "Gym Power", cat: "GYM", discount: 50, img: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd", location: "Belgrano 321, Campana", url: "https://instagram.com/gympower", whatsapp: "543489556677", hours: { days: "Lun-Dom", from: "06:00", to: "23:00", sundayClosed: false } },
+            { name: "Tecnología Store", cat: "TECNOLOGIA", discount: 35, img: "https://images.unsplash.com/photo-1468495244123-6c6c332eeece", location: "Mitre 654, Campana", url: "https://instagram.com/tecnologiastore", whatsapp: "543489667788", hours: { days: "Lun-Sáb", from: "10:00", to: "20:00", sundayClosed: true } },
+            { name: "Restaurante Sabor", cat: "COMIDA", discount: 35, img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4", location: "Av. 6 de Julio 111, Campana", url: "https://instagram.com/restaurantesabor", whatsapp: "543489778899", hours: { days: "Lun-Dom", from: "12:00", to: "23:00", sundayClosed: false } },
+            { name: "Pizzería Napoli", cat: "COMIDA", discount: 20, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591", location: "25 de Mayo 222, Campana", url: "https://instagram.com/pizzerianapoli", whatsapp: "543489889900", hours: { days: "Lun-Dom", from: "19:00", to: "00:00", sundayClosed: false } },
+            { name: "Bar El Encuentro", cat: "BARES", discount: 40, img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5", location: "Rivadavia 333, Campana", url: "https://instagram.com/barelencuentro", whatsapp: "543489990011", hours: { days: "Lun-Dom", from: "18:00", to: "04:00", sundayClosed: false } },
+            { name: "Pub Nocturno", cat: "BARES", discount: 25, img: "https://images.unsplash.com/photo-1572116469696-31de0f17cc43", location: "Castelli 444, Campana", url: "https://instagram.com/pubnocturno", whatsapp: "543489001122", hours: { days: "Jue-Dom", from: "20:00", to: "05:00", sundayClosed: false } },
+            { name: "Cine Campana", cat: "ENTRETENIMIENTO", discount: 0, img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1", location: "Av. Varela 631, Campana", url: "https://instagram.com/cinecampana", whatsapp: "543489112233", hours: { days: "Lun-Dom", from: "14:00", to: "23:00", sundayClosed: false } },
+            { name: "Sala de Juegos Fun", cat: "ENTRETENIMIENTO", discount: 45, img: "https://images.unsplash.com/photo-1549924230-c5b32a11e3d3", location: "Shopping Campana", url: "https://instagram.com/saladejuegosfun", whatsapp: "543489223344", hours: { days: "Lun-Dom", from: "10:00", to: "22:00", sundayClosed: false } },
+            { name: "Lavandería Express", cat: "SERVICIOS", discount: 30, img: "https://images.unsplash.com/photo-1604176354204-9268737828e4", location: "Av. Varela 631, Campana", url: "https://instagram.com/lavanderiaexpress", whatsapp: "543489123456", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
+            { name: "Peluquería Style", cat: "SERVICIOS", discount: 25, img: "https://images.unsplash.com/photo-1562322140-8baeececf3e2", location: "Av. Varela 631, Campana", url: "https://instagram.com/peluqueriastyle", whatsapp: "543489654321", hours: { days: "Lun-Sáb", from: "17:30", to: "22:30", sundayClosed: true } },
             { name: "Todo Casero", cat: "COMIDA", discount: 10, img: "logo.jpeg", location: "Campana", url: "https://nexoar-art.github.io/ROTISERIA-MALVINAS/", whatsapp: "543489358998", hours: { days: "Lun-Dom", from: "20:00", to: "23:50", sundayClosed: true } },
             { name: "NEXO-Art Paginas Web", cat: "SERVICIOS", discount: 10, img: "NEXO-ART.png", location: " Campana", url: "https://nexoar-art.github.io/NEXO-art/", whatsapp: "543489686939", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
             { name: "Estampados One Love ", cat: "TIENDA", discount: 5, img: "ESTAMPADOS ONE LOVE.png", location: "9 de julio 1381, campana", url: "https://www.instagram.com/estampados_one_love/", whatsapp: "541123106002", hours: { days: "Lun-Sáb", from: "09:00", to: "18:00", sundayClosed: true } },
@@ -813,20 +831,25 @@
         function populateCarousel() {
             const track = document.querySelector('.carousel-track');
             track.innerHTML = '';
-            let featured = displayedTiles.filter(t => t.discount > 0);
+            let featured = displayedTiles;
             featured.sort(() => Math.random() - 0.5);
             featured.forEach(t => {
                 let tierColor = '--color-low';
                 if (t.discount >= 20) tierColor = '--color-mid';
                 if (t.discount > 40) tierColor = '--color-hot';
+                // Alta calidad: remuevo parámetros de baja resolución y uso Unsplash full
+                let highResImg = t.img;
+                if (t.img.includes('unsplash.com')) {
+                    highResImg = t.img.split('?')[0]; // Elimina ?w=400 para resolución máxima
+                }
                 const item = document.createElement('div');
                 item.className = 'carousel-item';
                 item.innerHTML = `
                     <div style="position:relative;width:100%;height:100%;">
-                        <img src="${t.img}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover;">
+                        <img src="${highResImg}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover;">
                         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent 40%);display:flex;flex-direction:column;justify-content:flex-end;padding:30px 20px;color:white;text-align:center;">
-                            <div style="font-size:2rem;font-weight:900;text-shadow:1px 1px 4px black;">${t.name.toUpperCase()}</div>
-                            <div style="font-size:4.5rem;font-weight:900;text-shadow:2px 2px 6px black;color:var(${tierColor});margin-top:10px;">${t.discount}% OFF</div>
+                            <div style="font-size:2.5rem;font-weight:900;text-shadow:1px 1px 4px black;">${t.name.toUpperCase()}</div>
+                            <div style="font-size:5rem;font-weight:900;text-shadow:2px 2px 6px black;color:var(${tierColor});margin-top:10px;">${t.discount}% OFF</div>
                         </div>
                     </div>
                 `;
@@ -835,30 +858,26 @@
             });
             const items = document.querySelectorAll('.carousel-item');
             if (items.length === 0) return;
-            const itemWidth = items[0].getBoundingClientRect().width + 80;
+
             let index = 0;
             const update = () => {
-                track.style.transform = `translateX(-${index * itemWidth}px)`;
+                track.style.transform = `translateX(-${index * 100}%)`;
             };
-            document.querySelector('.carousel-btn.next').onclick = () => {
-                index = (index + 1) % items.length;
-                update();
-            };
-            document.querySelector('.carousel-btn.prev').onclick = () => {
-                index = (index - 1 + items.length) % items.length;
-                update();
-            };
+
             let autoSlide = setInterval(() => {
                 index = (index + 1) % items.length;
                 update();
-            }, 5000);
-            document.querySelector('.carousel').addEventListener('mouseenter', () => clearInterval(autoSlide));
-            document.querySelector('.carousel').addEventListener('mouseleave', () => {
+            }, 7000); // Más lento: 7 segundos entre imágenes
+
+            const carousel = document.querySelector('.carousel');
+            carousel.addEventListener('mouseenter', () => clearInterval(autoSlide));
+            carousel.addEventListener('mouseleave', () => {
                 autoSlide = setInterval(() => {
                     index = (index + 1) % items.length;
                     update();
-                }, 5000);
+                }, 7000);
             });
+
             update();
         }
         function populateTicker() {
@@ -927,6 +946,7 @@
             populateTicker();
             populateAdminTicker();
         }
+        /* ... resto del script sin cambios ... */
         function toggleDropdown() {
             const menu = document.getElementById('dropdown-menu');
             menu.classList.toggle('active');
@@ -955,6 +975,14 @@
         function closeFormModal() { document.getElementById('form-modal').classList.remove('active'); }
         function openDeliveryModal() { document.getElementById('delivery-modal').classList.add('active'); }
         function closeDeliveryModal() { document.getElementById('delivery-modal').classList.remove('active'); }
+        function openShareModal() {
+            document.getElementById('share-modal').classList.add('active');
+            const shareText = "¡Mirá las mejores ofertas de locales en Campana, Zárate y zona! 🔥 Descuentos imperdibles en ArgentPlay.online";
+            const shareUrl = window.location.href;
+            const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + "\n\n" + shareUrl)}`;
+            document.getElementById('wa-share-link').href = waUrl;
+        }
+        function closeShareModal() { document.getElementById('share-modal').classList.remove('active'); }
         function openPrivacyModal() { document.getElementById('privacy-modal').classList.add('active'); }
         function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
         function openAnnouncement() { document.getElementById('announcement-modal').classList.add('active'); }
@@ -1077,18 +1105,6 @@
             window.open(`https://api.whatsapp.com/send?phone=+543489686939&text=${encodeURIComponent(text)}`, '_blank');
             closeDeliveryModal();
         }
-
-        // NUEVAS FUNCIONES PARA EL MODAL DE COMPARTIR
-        function openShareModal() {
-            document.getElementById('share-modal').classList.add('active');
-            const shareText = "¡Mirá las mejores ofertas de locales en Campana, Zárate y zona! 🔥 Descuentos imperdibles en ArgentPlay.online";
-            const shareUrl = window.location.href;
-            const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + "\n\n" + shareUrl)}`;
-            document.getElementById('wa-share-link').href = waUrl;
-        }
-        function closeShareModal() {
-            document.getElementById('share-modal').classList.remove('active');
-        }
         function copyToClipboard() {
             navigator.clipboard.writeText(window.location.href)
                 .then(() => {
@@ -1132,6 +1148,7 @@
     </script>
 </body>
 </html>
+
 
 
 
