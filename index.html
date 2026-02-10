@@ -599,7 +599,7 @@
         <button class="close-modal" onclick="closeShareModal()">&times;</button>
         <div class="share-modal-content">
             <h2 style="color:var(--arg-celeste); margin-bottom:20px;">¡Compartí ArgentPlay.online!</h2>
-            <img src="MERCADO DE  LOCALES QR1.png" alt="QR Code ArgentPlay.online" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
+            <img src="MERCADO DE LOCALES QR1.png" alt="QR Code ArgentPlay.online" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
             <p style="font-size:1rem; margin:15px 0;">Escaneá el QR o compartí el enlace con tus amigos</p>
             <button class="btn-action btn-url" onclick="copyToClipboard()">📋 Copiar enlace</button>
             <a class="btn-action btn-wa" id="wa-share-link" target="_blank">📱 Compartir por WhatsApp</a>
@@ -616,7 +616,7 @@
     <div class="modal" id="form-modal" style="background:rgba(0,0,0,0.8);">
         <div class="form-modal-content">
             <button class="close-modal" style="color:#333;" onclick="closeFormModal()">&times;</button>
-            <h3 style="text-align:center; color:var(--arg-celeste);">🚀 Publicitar Local en Campana, Zárate y Escobar</h3>
+            <h3 style="text-align:center; color:var(--arg-celeste);">🚀 Publicitar Local en Campana, Zárate, Escobar, Pilar</h3>
             <p style="text-align:center; font-size:0.9rem; color:#666; margin-bottom:20px;">
                 ¡Sumá tu local a las mejores ofertas de la zona! 📈
             </p>
@@ -698,7 +698,7 @@
         </div>
     </div>
     <script>
-        const CURRENT_VERSION = "5.1";
+        const CURRENT_VERSION = "5.2";
         const safeStorage = {
             get(key) {
                 try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -744,7 +744,7 @@
             { name: "Pizzería Napoli", cat: "COMIDA", discount: 20, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591", location: "25 de Mayo 222, Campana", url: "https://instagram.com/pizzerianapoli", whatsapp: "543489889900", hours: { days: "Lun-Dom", from: "19:00", to: "00:00", sundayClosed: false } },
             { name: "Bar El Encuentro", cat: "BARES", discount: 40, img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5", location: "Rivadavia 333, Campana", url: "https://instagram.com/barelencuentro", whatsapp: "543489990011", hours: { days: "Lun-Dom", from: "18:00", to: "04:00", sundayClosed: false } },
             { name: "Pub Nocturno", cat: "BARES", discount: 25, img: "https://images.unsplash.com/photo-1572116469696-31de0f17cc43", location: "Castelli 444, Campana", url: "https://instagram.com/pubnocturno", whatsapp: "543489001122", hours: { days: "Jue-Dom", from: "20:00", to: "05:00", sundayClosed: false } },
-            { name: "Cine Campana", cat: "ENTRETENIMIENTO", discount: 0, img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1", location: "Av. Varela 631, Campana", url: "https://instagram.com/cinecampana", whatsapp: "543489112233", hours: { days: "Lun-Dom", from: "14:00", to: "23:00", sundayClosed: false } },
+            { name: "Cine Campana", cat: "ENTRETENIMIENTO", discount: 0, img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1", location: "Av. Varela 631, Campana", url: "https://instagram.com/cinecampana", whatsapp: "543489630653", hours: { days: "Lun-Dom", from: "14:00", to: "23:00", sundayClosed: false } },
             { name: "Sala de Juegos Fun", cat: "ENTRETENIMIENTO", discount: 45, img: "https://images.unsplash.com/photo-1549924230-c5b32a11e3d3", location: "Shopping Campana", url: "https://instagram.com/saladejuegosfun", whatsapp: "543489223344", hours: { days: "Lun-Dom", from: "10:00", to: "22:00", sundayClosed: false } },
             { name: "Lavandería Express", cat: "SERVICIOS", discount: 30, img: "https://images.unsplash.com/photo-1604176354204-9268737828e4", location: "Av. Varela 631, Campana", url: "https://instagram.com/lavanderiaexpress", whatsapp: "543489123456", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
             { name: "Peluquería Style", cat: "SERVICIOS", discount: 25, img: "https://images.unsplash.com/photo-1562322140-8baeececf3e2", location: "Av. Varela 631, Campana", url: "https://instagram.com/peluqueriastyle", whatsapp: "543489654321", hours: { days: "Lun-Sáb", from: "17:30", to: "22:30", sundayClosed: true } },
@@ -867,7 +867,7 @@
             let autoSlide = setInterval(() => {
                 index = (index + 1) % items.length;
                 update();
-            }, 7000); // Más lento: 7 segundos entre imágenes
+            }, 5000); // Más lento: 7 segundos entre imágenes
 
             const carousel = document.querySelector('.carousel');
             carousel.addEventListener('mouseenter', () => clearInterval(autoSlide));
@@ -875,7 +875,7 @@
                 autoSlide = setInterval(() => {
                     index = (index + 1) % items.length;
                     update();
-                }, 7000);
+                }, 5000);
             });
 
             update();
@@ -1148,6 +1148,7 @@
     </script>
 </body>
 </html>
+
 
 
 
