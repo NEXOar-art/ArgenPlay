@@ -585,7 +585,7 @@
     <div class="modal" id="exit-intent-modal">
         <div class="exit-intent-content">
             <button class="close-modal" style="color:white;" onclick="closeExitIntent()">&times;</button>
-            <p><strong>¿Querés que miles de personas de Campana, Zárate, Escobar, Pilar vean tu local con las mejores ofertas?</strong></p>
+            <p><strong>¿Querés que miles de personas vean tu local con las mejores ofertas?</strong></p>
             <p>¡Publicitá y atraé más clientes!</p>
             <button class="btn-action" onclick="openFormModal(); closeExitIntent();">
                 Publicitar mi Local Ahora 🚀
@@ -599,7 +599,7 @@
         <button class="close-modal" onclick="closeShareModal()">&times;</button>
         <div class="share-modal-content">
             <h2 style="color:var(--arg-celeste); margin-bottom:20px;">¡Compartí ArgentPlay.online!</h2>
-            <img src="MERCADO DE LOCALES QR1.png" alt="QR Code ArgentPlay.online" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
+            <img src="mercado de locales.jpeg" alt="QR Code ArgentPlay.online" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
             <p style="font-size:1rem; margin:15px 0;">Escaneá el QR o compartí el enlace con tus amigos</p>
             <button class="btn-action btn-url" onclick="copyToClipboard()">📋 Copiar enlace</button>
             <a class="btn-action btn-wa" id="wa-share-link" target="_blank">📱 Compartir por WhatsApp</a>
@@ -698,7 +698,7 @@
         </div>
     </div>
     <script>
-        const CURRENT_VERSION = "5.2";
+        const CURRENT_VERSION = "5.3";
         const safeStorage = {
             get(key) {
                 try { return localStorage.getItem(key); } catch (e) { return null; }
@@ -733,7 +733,7 @@
             { name: "Herramientas Pro", cat: "FERRETERIA", discount: 50, img: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc", location: "Sarmiento 654, Campana", url: "https://instagram.com/herramientaspro", whatsapp: "543489777777", hours: { days: "Lun-Vie", from: "08:30", to: "17:30", sundayClosed: true } },
             { name: "Helados Artesanales", cat: "HELADERIA", discount: 18, img: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a", location: "Alberdi 987, Campana", url: "https://instagram.com/heladosartesanales", whatsapp: "543489888888", hours: { days: "Lun-Dom", from: "12:00", to: "00:00", sundayClosed: false } },
             { name: "El Rey de la Carne", cat: "CARNICERIA", discount: 22, img: "https://images.unsplash.com/photo-1542838132-92c53300491e", location: "Castelli 234, Campana", url: "https://instagram.com/elreydelacarne", whatsapp: "543489999999", hours: { days: "Lun-Sáb", from: "07:00", to: "21:00", sundayClosed: true } },
-            { name: "Farmacia Del Pueblo", cat: "FARMACIA", discount: 42, img: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88", location: "Rivadavia 567, Campana", url: "https://instagram.com/farmaciadelpueblo", whatsapp: "543489000000", hours: { days: "Lun-Dom", from: "08:00", to: "22:00", sundayClosed: false } },
+            { name: "Farmacia Temporale", cat: "FARMACIA", discount: 5, img: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88", location: " Eduardo Casaux 1748, Campana", url: "https://instagram.com/farmaciadelpueblo", whatsapp: "543489221899", hours: { days: "Lun-Sab", from: "08:00", to: "20:00", sundayClosed: false } },
             { name: "Panadería La Espiga", cat: "PANADERIA", discount: 30, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff", location: "Balcarce 890, Campana", url: "https://instagram.com/panaderialaespiga", whatsapp: "543489112233", hours: { days: "Lun-Dom", from: "06:00", to: "22:00", sundayClosed: false } },
             { name: "Verdulería Fresca", cat: "VERDULERIA", discount: 25, img: "https://images.unsplash.com/photo-1610348726304-b1c5e6f984e6", location: "Lavalle 123, Campana", url: "https://instagram.com/verduleriafresca", whatsapp: "543489223344", hours: { days: "Lun-Sáb", from: "07:00", to: "20:00", sundayClosed: true } },
             { name: "Taller El Rápido", cat: "TALLER_MECANICO", discount: 40, img: "https://images.unsplash.com/photo-1621905252507-b3541bc6ea34", location: "Roca 456, Campana", url: "https://instagram.com/tallerelrapido", whatsapp: "543489334455", hours: { days: "Lun-Vie", from: "08:00", to: "18:00", sundayClosed: true } },
@@ -1148,6 +1148,7 @@
     </script>
 </body>
 </html>
+
 
 
 
