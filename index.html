@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ArgentPlay.online Mercado De Locales</title>
-    <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Preconnects para acelerar carga de recursos externos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://images.unsplash.com">
+
+    <!-- Fuentes optimizadas: Montserrat (muy similar a Proxima Nova) + Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -20,7 +29,7 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
-            font-family: 'Proxima Nova', 'Roboto', sans-serif;
+            font-family: 'Montserrat', 'Roboto', sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: var(--text-primary);
             min-height: 100vh;
@@ -282,8 +291,6 @@
             transition: transform 0.3s;
         }
         .fab-pub:hover { transform: scale(1.05); }
-
-        /* BOTÓN NOTICIAS */
         .news-fab {
             background: rgba(255, 152, 0, 0.94);
             box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
@@ -296,7 +303,6 @@
         .news-fab {
             animation: subtle-glow 4s ease-in-out infinite;
         }
-
         .form-modal-content {
             background: rgba(255,255,255,0.88); padding: 25px; border-radius: 20px;
             width: 90%; max-width: 400px; margin: auto; position: relative;
@@ -331,7 +337,6 @@
             width: 90%;
             margin: 0 auto;
         }
-        /* CARRUSEL ESTILO MERCADO LIBRE: 1220x400px MÁXIMO, ALTA CALIDAD, MÁS LENTO */
         .carousel {
             position: relative;
             overflow: hidden;
@@ -414,7 +419,7 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-        .announcement-content, .exit-intent-content, .privacy-content {
+        .exit-intent-content, .privacy-content {
             background: rgba(255,255,255,0.88);
             border-radius: 20px;
             padding: 40px 20px;
@@ -452,7 +457,7 @@
     <header>
         <div class="header-content">
             <div class="logo-area">
-                <img class="logo-img" src="mercado de locales.jpeg" alt="ArgentPlay.online">
+                <img class="logo-img" src="mercado-de-locales.jpeg" alt="ArgentPlay.online" fetchpriority="high" decoding="async" width="80" height="120">
                 <div class="logo-text">
                     ArgentPlay.online
                     <span>Mercado De Locales</span>
@@ -491,7 +496,6 @@
             </div>
         </div>
     </header>
-    <!-- CARRUSEL ESTILO MERCADO LIBRE -->
     <div class="carousel">
         <div class="carousel-track"></div>
     </div>
@@ -508,49 +512,49 @@
         </div>
     </div>
     <div class="filter-bar">
-        <button class="btn-filter" onclick="resetAll()">Todo</button>
-        <button class="btn-filter" onclick="filter('cat', 'CARNICERIA', this)">🥩 Carnicería</button>
-        <button class="btn-filter" onclick="filter('cat', 'FARMACIA', this)">💊 Farmacia</button>
-        <button class="btn-filter" onclick="filter('cat', 'FERRETERIA', this)">🔧 Ferretería</button>
-        <button class="btn-filter" onclick="filter('cat', 'HELADERIA', this)">🍦 Heladería</button>
-        <button class="btn-filter" onclick="filter('cat', 'PANADERIA', this)">🍞 Panadería</button>
-        <button class="btn-filter" onclick="filter('cat', 'VERDULERIA', this)">🥦 Verdulería</button>
-        <button class="btn-filter" onclick="filter('cat', 'TALLER_MECANICO', this)">🛠️ Taller Mecánico</button>
-        <button class="btn-filter" onclick="filter('cat', 'SALUD', this)">🏥 Salud</button>
-        <button class="btn-filter" onclick="filter('cat', 'GYM', this)">💪 Gym</button>
-        <button class="btn-filter" onclick="filter('cat', 'TECNOLOGIA', this)">📱 Tecnología</button>
-        <button class="btn-filter" onclick="filter('cat', 'COMIDA', this)">🍔 Comida</button>
-        <button class="btn-filter" onclick="filter('cat', 'BARES', this)">🍻 Bares</button>
-        <button class="btn-filter" onclick="filter('cat', 'ENTRETENIMIENTO', this)">🎉 Entretenimiento</button>
-        <button class="btn-filter" onclick="filter('cat', 'SERVICIOS', this)">🔧 Servicios</button>
-        <button class="btn-filter" onclick="filter('cat', 'PAPELERIA', this)">📄 Papelería</button>
-        <button class="btn-filter" onclick="filter('cat', 'PELUQUERIA_BARBERIA', this)">✂️ Peluquerías y Barberías</button>
-        <button class="btn-filter" onclick="filter('cat', 'CORRALON', this)">🏗️ Corralón</button>
-        <button class="btn-filter" onclick="filter('cat', 'LAVADERO_AUTOS', this)">🚗 Lavadero de Autos</button>
-        <button class="btn-filter" onclick="filter('cat', 'COTILLON', this)">🎉 Cotillón</button>
-        <button class="btn-filter" onclick="filter('cat', 'GOMERIA', this)">🛞 Gomería</button>
-        <button class="btn-filter" onclick="filter('cat', 'MAYORISTA', this)">📦 Mayorista</button>
-        <button class="btn-filter" onclick="filter('cat', 'KIOSCO', this)">🏪 Kiosco</button>
-        <button class="btn-filter" onclick="filter('cat', 'ALMACEN Y TIENDA DE ALIMENTOS', this)">🏪 Almacén y Tienda De Alimentos</button>
-        <button class="btn-filter" onclick="filter('cat', 'MERCADO', this)">🛒 Mercado</button>
-        <button class="btn-filter" onclick="filter('cat', 'AUTOPARTES', this)">🔧 Autopartes</button>
-        <button class="btn-filter" onclick="filter('cat', 'TIENDA', this)">🏬 Tienda</button>
-        <button class="btn-filter" onclick="filter('cat', 'QUINTA', this)">🌳 Quinta</button>
-        <button class="btn-filter" onclick="filter('cat', 'LAVANDERIA', this)">🧺 Lavandería</button>
-        <button class="btn-filter" onclick="filter('cat', 'LUBRICENTRO', this)">🛢️ Lubricentro</button>
-        <button class="btn-filter" onclick="filter('cat', 'FLETES', this)">🚚 Fletes</button>
-        <button class="btn-filter" onclick="filter('cat', 'ARTESANIAS', this)">🎨 Artesanías</button>
-        <button class="btn-filter" onclick="filter('cat', 'CATERING', this)">🍽️ Catering</button>
-        <button class="btn-filter" onclick="filter('cat', 'HERRERIA', this)">🔨 Herrería</button>
-        <button class="btn-filter" onclick="filter('cat', 'CAMPING', this)">🏕️ Camping</button>
-        <button class="btn-filter" onclick="filter('cat', 'SALON_DE_EVENTOS', this)">🎉 Salón de Eventos</button>
-        <button class="btn-filter" onclick="filter('cat', 'CANCHAS', this)">⚽ Canchas</button>
-        <button class="btn-filter" onclick="filter('cat', 'INMOBILIARIA', this)">🏠 Inmobiliaria</button>
-        <button class="btn-filter" onclick="filter('cat', 'ALQUILER', this)">🔑 Alquiler</button>
+        <button class="btn-filter" onclick="resetAll()" aria-label="Mostrar todos">Todo</button>
+        <button class="btn-filter" onclick="filter('cat', 'CARNICERIA', this)" aria-label="Filtrar por Carnicería">🥩 Carnicería</button>
+        <button class="btn-filter" onclick="filter('cat', 'FARMACIA', this)" aria-label="Filtrar por Farmacia">💊 Farmacia</button>
+        <button class="btn-filter" onclick="filter('cat', 'FERRETERIA', this)" aria-label="Filtrar por Ferretería">🔧 Ferretería</button>
+        <button class="btn-filter" onclick="filter('cat', 'HELADERIA', this)" aria-label="Filtrar por Heladería">🍦 Heladería</button>
+        <button class="btn-filter" onclick="filter('cat', 'PANADERIA', this)" aria-label="Filtrar por Panadería">🍞 Panadería</button>
+        <button class="btn-filter" onclick="filter('cat', 'VERDULERIA', this)" aria-label="Filtrar por Verdulería">🥦 Verdulería</button>
+        <button class="btn-filter" onclick="filter('cat', 'TALLER_MECANICO', this)" aria-label="Filtrar por Taller Mecánico">🛠️ Taller Mecánico</button>
+        <button class="btn-filter" onclick="filter('cat', 'SALUD', this)" aria-label="Filtrar por Salud">🏥 Salud</button>
+        <button class="btn-filter" onclick="filter('cat', 'GYM', this)" aria-label="Filtrar por Gym">💪 Gym</button>
+        <button class="btn-filter" onclick="filter('cat', 'TECNOLOGIA', this)" aria-label="Filtrar por Tecnología">📱 Tecnología</button>
+        <button class="btn-filter" onclick="filter('cat', 'COMIDA', this)" aria-label="Filtrar por Comida">🍔 Comida</button>
+        <button class="btn-filter" onclick="filter('cat', 'BARES', this)" aria-label="Filtrar por Bares">🍻 Bares</button>
+        <button class="btn-filter" onclick="filter('cat', 'ENTRETENIMIENTO', this)" aria-label="Filtrar por Entretenimiento">🎉 Entretenimiento</button>
+        <button class="btn-filter" onclick="filter('cat', 'SERVICIOS', this)" aria-label="Filtrar por Servicios">🔧 Servicios</button>
+        <button class="btn-filter" onclick="filter('cat', 'PAPELERIA', this)" aria-label="Filtrar por Papelería">📄 Papelería</button>
+        <button class="btn-filter" onclick="filter('cat', 'PELUQUERIA_BARBERIA', this)" aria-label="Filtrar por Peluquerías y Barberías">✂️ Peluquerías y Barberías</button>
+        <button class="btn-filter" onclick="filter('cat', 'CORRALON', this)" aria-label="Filtrar por Corralón">🏗️ Corralón</button>
+        <button class="btn-filter" onclick="filter('cat', 'LAVADERO_AUTOS', this)" aria-label="Filtrar por Lavadero de Autos">🚗 Lavadero de Autos</button>
+        <button class="btn-filter" onclick="filter('cat', 'COTILLON', this)" aria-label="Filtrar por Cotillón">🎉 Cotillón</button>
+        <button class="btn-filter" onclick="filter('cat', 'GOMERIA', this)" aria-label="Filtrar por Gomería">🛞 Gomería</button>
+        <button class="btn-filter" onclick="filter('cat', 'MAYORISTA', this)" aria-label="Filtrar por Mayorista">📦 Mayorista</button>
+        <button class="btn-filter" onclick="filter('cat', 'KIOSCO', this)" aria-label="Filtrar por Kiosco">🏪 Kiosco</button>
+        <button class="btn-filter" onclick="filter('cat', 'ALMACEN Y TIENDA DE ALIMENTOS', this)" aria-label="Filtrar por Almacén y Tienda de Alimentos">🏪 Almacén y Tienda De Alimentos</button>
+        <button class="btn-filter" onclick="filter('cat', 'MERCADO', this)" aria-label="Filtrar por Mercado">🛒 Mercado</button>
+        <button class="btn-filter" onclick="filter('cat', 'AUTOPARTES', this)" aria-label="Filtrar por Autopartes">🔧 Autopartes</button>
+        <button class="btn-filter" onclick="filter('cat', 'TIENDA', this)" aria-label="Filtrar por Tienda">🏬 Tienda</button>
+        <button class="btn-filter" onclick="filter('cat', 'QUINTA', this)" aria-label="Filtrar por Quinta">🌳 Quinta</button>
+        <button class="btn-filter" onclick="filter('cat', 'LAVANDERIA', this)" aria-label="Filtrar por Lavandería">🧺 Lavandería</button>
+        <button class="btn-filter" onclick="filter('cat', 'LUBRICENTRO', this)" aria-label="Filtrar por Lubricentro">🛢️ Lubricentro</button>
+        <button class="btn-filter" onclick="filter('cat', 'FLETES', this)" aria-label="Filtrar por Fletes">🚚 Fletes</button>
+        <button class="btn-filter" onclick="filter('cat', 'ARTESANIAS', this)" aria-label="Filtrar por Artesanías">🎨 Artesanías</button>
+        <button class="btn-filter" onclick="filter('cat', 'CATERING', this)" aria-label="Filtrar por Catering">🍽️ Catering</button>
+        <button class="btn-filter" onclick="filter('cat', 'HERRERIA', this)" aria-label="Filtrar por Herrería">🔨 Herrería</button>
+        <button class="btn-filter" onclick="filter('cat', 'CAMPING', this)" aria-label="Filtrar por Camping">🏕️ Camping</button>
+        <button class="btn-filter" onclick="filter('cat', 'SALON_DE_EVENTOS', this)" aria-label="Filtrar por Salón de Eventos">🎉 Salón de Eventos</button>
+        <button class="btn-filter" onclick="filter('cat', 'CANCHAS', this)" aria-label="Filtrar por Canchas">⚽ Canchas</button>
+        <button class="btn-filter" onclick="filter('cat', 'INMOBILIARIA', this)" aria-label="Filtrar por Inmobiliaria">🏠 Inmobiliaria</button>
+        <button class="btn-filter" onclick="filter('cat', 'ALQUILER', this)" aria-label="Filtrar por Alquiler">🔑 Alquiler</button>
         <div class="separator"></div>
-        <button class="btn-filter green-btn" onclick="filter('discount', 'green', this)">🟢 < 20%</button>
-        <button class="btn-filter yellow-btn" onclick="filter('discount', 'yellow', this)">🟡 20-40%</button>
-        <button class="btn-filter red-btn" onclick="filter('discount', 'red', this)">🔴 > 40%</button>
+        <button class="btn-filter green-btn" onclick="filter('discount', 'green', this)" aria-label="Descuentos menores a 20%">🟢 < 20%</button>
+        <button class="btn-filter yellow-btn" onclick="filter('discount', 'yellow', this)" aria-label="Descuentos 20-40%">🟡 20-40%</button>
+        <button class="btn-filter red-btn" onclick="filter('discount', 'red', this)" aria-label="Descuentos mayores a 40%">🔴 > 40%</button>
     </div>
     <div class="board-container">
         <div id="puzzle-board"></div>
@@ -571,17 +575,6 @@
             <i class="fas fa-truck"></i> Publicar Delivery
         </div>
     </div>
-    <!-- Modales -->
-    <div class="modal" id="announcement-modal">
-        <div class="announcement-content">
-            <button class="close-modal" onclick="closeAnnouncement()">&times;</button>
-            <h1>¡Descubrí lo que está pasando cerca tuyo!</h1>
-            <p>Más de 15 locales recién sumados con descuentos irresistibles de hasta <strong>50% OFF</strong>.</p>
-            <p>👉 Vení a conocerlos, disfrutá las ofertas en persona y asegurá tu beneficio antes que se agoten.</p>
-            <p>📲 Seguinos en Instagram para enterarte primero de las próximas aperturas y promociones exclusivas.</p>
-            <button class="btn-action" onclick="closeAnnouncement()">Explorar ofertas</button>
-        </div>
-    </div>
     <div class="modal" id="exit-intent-modal">
         <div class="exit-intent-content">
             <button class="close-modal" style="color:white;" onclick="closeExitIntent()">&times;</button>
@@ -599,7 +592,7 @@
         <button class="close-modal" onclick="closeShareModal()">&times;</button>
         <div class="share-modal-content">
             <h2 style="color:var(--arg-celeste); margin-bottom:20px;">¡Compartí ArgentPlay.online!</h2>
-            <img src="MERCADO DE LOCALES QR1.jpeg" alt="QR Code ArgentPlay.online" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
+            <img src="MERCADO DE LOCALES QR1.jpeg" alt="QR Code ArgentPlay.online" loading="lazy" decoding="async" style="width:280px; max-width:85%; height:auto; border-radius:16px; box-shadow:var(--shadow-soft); margin:20px 0;">
             <p style="font-size:1rem; margin:15px 0;">Escaneá el QR o compartí el enlace con tus amigos</p>
             <button class="btn-action btn-url" onclick="copyToClipboard()">📋 Copiar enlace</button>
             <a class="btn-action btn-wa" id="wa-share-link" target="_blank">📱 Compartir por WhatsApp</a>
@@ -699,21 +692,30 @@
     </div>
     <script>
         const CURRENT_VERSION = "5.7";
-        const safeStorage = {
-            get(key) {
-                try { return localStorage.getItem(key); } catch (e) { return null; }
-            },
-            set(key, value) {
-                try { localStorage.setItem(key, value); } catch (e) { /* ignorar */ }
+
+        function getStorage(key) {
+            try {
+                return localStorage.getItem(key);
+            } catch (e) {
+                return null;
             }
-        };
+        }
+
+        function setStorage(key, value) {
+            try {
+                localStorage.setItem(key, value);
+            } catch (e) {
+                // Ignorar
+            }
+        }
+
         const url = new URL(window.location.href);
         if (url.searchParams.get("v") !== CURRENT_VERSION) {
             url.searchParams.set("v", CURRENT_VERSION);
-            safeStorage.set("appVersion", CURRENT_VERSION);
+            setStorage("appVersion", CURRENT_VERSION);
             window.location.replace(url.href);
         }
-        const POPUP_SEEN_KEY = "popupSeen";
+
         const DESKTOP_COLS = 14;
         const MOBILE_COLS = 4;
         const ROWS = 100;
@@ -723,6 +725,15 @@
         let tiles = [];
         let displayedTiles = [];
         let currentGalleryIndex = 0;
+
+        function optimizeUnsplashUrl(url, width = 600, height = null, quality = 75) {
+            if (!url.includes('unsplash.com')) return url;
+            let base = url.split('?')[0];
+            let params = `auto=format&fit=crop&w=${width}&q=${quality}`;
+            if (height) params += `&h=${height}`;
+            return base + '?' + params;
+        }
+
         const baseData = [
             { name: "Carnicería El Toro", cat: "CARNICERIA", discount: 45, img: "https://images.unsplash.com/photo-1607623174012-3e2c3b8d9f8d", location: "Av. Rivadavia 1234, Campana", url: "https://instagram.com/carniceriaeltoro", whatsapp: "543489111111", hours: { days: "Lun-Sáb", from: "08:00", to: "20:00", sundayClosed: true } },
             { name: "Farmacia Central", cat: "FARMACIA", discount: 15, img: "https://images.unsplash.com/photo-1585435557343-3b092031a831", location: "Belgrano 567, Campana", url: "https://instagram.com/farmaciacentral", whatsapp: "543489222222", hours: { days: "Lun-Dom", from: "08:00", to: "22:00", sundayClosed: false } },
@@ -733,7 +744,7 @@
             { name: "Herramientas Pro", cat: "FERRETERIA", discount: 50, img: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc", location: "Sarmiento 654, Campana", url: "https://instagram.com/herramientaspro", whatsapp: "543489777777", hours: { days: "Lun-Vie", from: "08:30", to: "17:30", sundayClosed: true } },
             { name: "Helados Artesanales", cat: "HELADERIA", discount: 18, img: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a", location: "Alberdi 987, Campana", url: "https://instagram.com/heladosartesanales", whatsapp: "543489888888", hours: { days: "Lun-Dom", from: "12:00", to: "00:00", sundayClosed: false } },
             { name: "El Rey de la Carne", cat: "CARNICERIA", discount: 22, img: "https://images.unsplash.com/photo-1542838132-92c53300491e", location: "Castelli 234, Campana", url: "https://instagram.com/elreydelacarne", whatsapp: "543489999999", hours: { days: "Lun-Sáb", from: "07:00", to: "21:00", sundayClosed: true } },
-            { name: "Farmacia Temporale", cat: "FARMACIA", discount: 5, img: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88", location: " Eduardo Casaux 1748, Campana", url: "https://instagram.com/farmaciadelpueblo", whatsapp: "543489221899", hours: { days: "Lun-Sab", from: "08:00", to: "20:00", sundayClosed: false } },
+            { name: "Farmacia Temporale", cat: "FARMACIA", discount: 5, img: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88", location: "Eduardo Casaux 1748, Campana", url: "https://instagram.com/farmaciadelpueblo", whatsapp: "543489221899", hours: { days: "Lun-Sab", from: "08:00", to: "20:00", sundayClosed: false } },
             { name: "Panadería La Espiga", cat: "PANADERIA", discount: 30, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff", location: "Balcarce 890, Campana", url: "https://instagram.com/panaderialaespiga", whatsapp: "543489112233", hours: { days: "Lun-Dom", from: "06:00", to: "22:00", sundayClosed: false } },
             { name: "Verdulería Fresca", cat: "VERDULERIA", discount: 25, img: "https://images.unsplash.com/photo-1610348726304-b1c5e6f984e6", location: "Lavalle 123, Campana", url: "https://instagram.com/verduleriafresca", whatsapp: "543489223344", hours: { days: "Lun-Sáb", from: "07:00", to: "20:00", sundayClosed: true } },
             { name: "Taller El Rápido", cat: "TALLER_MECANICO", discount: 40, img: "https://images.unsplash.com/photo-1621905252507-b3541bc6ea34", location: "Roca 456, Campana", url: "https://instagram.com/tallerelrapido", whatsapp: "543489334455", hours: { days: "Lun-Vie", from: "08:00", to: "18:00", sundayClosed: true } },
@@ -749,13 +760,14 @@
             { name: "Lavandería Express", cat: "SERVICIOS", discount: 30, img: "https://images.unsplash.com/photo-1604176354204-9268737828e4", location: "Av. Varela 631, Campana", url: "https://instagram.com/lavanderiaexpress", whatsapp: "543489123456", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
             { name: "Peluquería Style", cat: "SERVICIOS", discount: 25, img: "https://images.unsplash.com/photo-1562322140-8baeececf3e2", location: "Av. Varela 631, Campana", url: "https://instagram.com/peluqueriastyle", whatsapp: "543489654321", hours: { days: "Lun-Sáb", from: "17:30", to: "22:30", sundayClosed: true } },
             { name: "Todo Casero", cat: "COMIDA", discount: 10, img: "logo.jpeg", location: "Campana", url: "https://nexoar-art.github.io/ROTISERIA-MALVINAS/", whatsapp: "543489358998", hours: { days: "Lun-Dom", from: "20:00", to: "23:50", sundayClosed: true } },
-            { name: "NEXO-Art Paginas Web", cat: "SERVICIOS", discount: 10, img: "NEXO-ART.png", location: " Campana", url: "https://nexoar-art.github.io/NEXO-art/", whatsapp: "543489686939", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
-            { name: "Estampados One Love ", cat: "TIENDA", discount: 5, img: "ESTAMPADOS ONE LOVE.png", location: "9 de julio 1381, campana", url: "https://www.instagram.com/estampados_one_love/", whatsapp: "541123106002", hours: { days: "Lun-Sáb", from: "09:00", to: "18:00", sundayClosed: true } },
-            { name: "CV-ATS para Empleos ", cat: "SERVICIOS", discount: 5 , img: "Logo CV-ATS.png", location: " Campana", url: "https://nexoar-art.github.io/CV-ATS/", whatsapp: "543489686939", hours: { days: "Lun-Vier", from: "10:00", to: "18:00", sundayClosed: true } },
-            { name: "HERRERIA INDUSTRIAL WP ", cat: "HERRERIA", discount: 10 , img: "HerreiaWP.png", location: "Pedro Martini 825, Zarate", url: "https://www.instagram.com/herreriawp/", whatsapp: "543487455175", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } },
-            { name: "REPUESTOS DEL AUTOMOTOR PEKA", cat: "AUTOPARTES", discount: 5 , img: "automotor peka.png", location: "V. Demarco 350, Campana", url: "https://nexoar-art.github.io/PEKA-AUTOPART/", whatsapp: "543489524324", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } },
-            { name: "La Querencia ", cat: "Almacen y Tienda de Alimentos", discount:  , img:"querencia.jpeg", location: "Av. Ameghino 620, Campana", url: "https://www.instagram.com/laquerenciacampana/", whatsapp: "543489594129", hours: { days: "Lun-Sab", from: "07:30", to: "15:00", sundayClosed: true } }
+            { name: "NEXO-Art Paginas Web", cat: "SERVICIOS", discount: 50, img: "NEXO-ART.png", location: "Campana", url: "https://nexoar-art.github.io/NEXO-art/", whatsapp: "543489686939", hours: { days: "Lun-Sáb", from: "08:00", to: "19:00", sundayClosed: true } },
+            { name: "Estampados One Love", cat: "TIENDA", discount: 5, img: "ESTAMPADOS ONE LOVE.png", location: "9 de julio 1381, campana", url: "https://www.instagram.com/estampados_one_love/", whatsapp: "541123106002", hours: { days: "Lun-Sáb", from: "09:00", to: "18:00", sundayClosed: true } },
+            { name: "CV-ATS para Empleos", cat: "SERVICIOS", discount: 5, img: "Logo CV-ATS.png", location: "Campana", url: "https://nexoar-art.github.io/CV-ATS/", whatsapp: "543489686939", hours: { days: "Lun-Vier", from: "10:00", to: "18:00", sundayClosed: true } },
+            { name: "HERRERIA INDUSTRIAL WP", cat: "HERRERIA", discount: 10, img: "HerreiaWP.png", location: "Pedro Martini 825, Zarate", url: "https://www.instagram.com/herreriawp/", whatsapp: "543487455175", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } },
+            { name: "REPUESTOS DEL AUTOMOTOR PEKA", cat: "AUTOPARTES", discount: 5, img: "automotor peka.png", location: "V. Demarco 350, Campana", url: "https://nexoar-art.github.io/PEKA-AUTOPART/", whatsapp: "543489524324", hours: { days: "Lun-Sab", from: "09:00", to: "18:00", sundayClosed: true } },
+            { name: "La Querencia", cat: "ALMACEN Y TIENDA DE ALIMENTOS",discount: 1, img: "querencia.jpeg", location: "Av. Ameghino 620, Campana", url: "https://www.instagram.com/laquerenciacampana/", whatsapp: "543489594129", hours: { days: "Lun-Sab", from: "07:30", to: "15:00", sundayClosed: true } }
         ];
+
         const adminTickerMessages = [
             "¡NUEVOS LOCALES SE SUMAN CADA SEMANA! 🔥",
             "SEGUINOS EN INSTAGRAM @mercadodelocales PARA MÁS OFERTAS EXCLUSIVAS",
@@ -763,7 +775,9 @@
             "OFERTA FLASH: HASTA 60% OFF EN LOCALES SELECCIONADOS ESTE FIN DE SEMANA",
             "¡PUBLICITÁ TU LOCAL Y LLEGÁ A MILES DE CLIENTES!"
         ];
+
         let activeFilters = { cat: null, discount: null, search: '', location: null };
+
         function getCity(t) {
             if (!t.location) return 'Campana';
             const lowerLocation = t.location.toLowerCase().trim();
@@ -773,32 +787,35 @@
             if (lowerLocation.includes('campana')) return 'Campana';
             return 'Campana';
         }
+
         function generateMatrix() {
             tiles = [];
             let map = Array(ROWS).fill().map(() => Array(COLS).fill(false));
             let dataIdx = 0;
-            for(let y = 0; y < ROWS; y++) {
-                for(let x = 0; x < COLS; x++) {
-                    if(map[y][x]) continue;
+            for (let y = 0; y < ROWS; y++) {
+                for (let x = 0; x < COLS; x++) {
+                    if (map[y][x]) continue;
                     let isBig = Math.random() > 0.85;
-                    let w = (isBig && x < COLS-1) ? 2 : 1;
-                    let h = (isBig && y < ROWS-1) ? 2 : 1;
-                    if(w === 2 && h === 2 && (map[y][x+1] || map[y+1][x] || map[y+1][x+1])) { w=1; h=1; }
-                    for(let i = 0; i < h; i++) for(let j = 0; j < w; j++) map[y+i][x+j] = true;
+                    let w = (isBig && x < COLS - 1) ? 2 : 1;
+                    let h = (isBig && y < ROWS - 1) ? 2 : 1;
+                    if (w === 2 && h === 2 && (map[y][x + 1] || map[y + 1][x] || map[y + 1][x + 1])) { w = 1; h = 1; }
+                    for (let i = 0; i < h; i++) for (let j = 0; j < w; j++) map[y + i][x + j] = true;
                     const data = baseData[dataIdx % baseData.length];
                     dataIdx++;
                     let tier = 'tier-green';
-                    if(data.discount >= 20) tier = 'tier-yellow';
-                    if(data.discount > 40) tier = 'tier-red';
+                    if (data.discount >= 20) tier = 'tier-yellow';
+                    if (data.discount > 40) tier = 'tier-red';
                     tiles.push({ id: `tile-${tiles.length}`, x, y, w, h, ...data, tier });
                 }
             }
         }
+
         function createTileElement(t, index) {
             const el = document.createElement('div');
             el.className = `tile ${t.tier}`;
+            const optimizedSrc = optimizeUnsplashUrl(t.img, 500, 500, 70);
             el.innerHTML = `
-                <img src="${t.img}" class="tile-img" loading="lazy">
+                <img src="${optimizedSrc}" class="tile-img" loading="lazy" decoding="async" alt="${t.name}">
                 <div class="tile-info">
                     <div class="tile-title">${t.name}</div>
                     <div class="tile-discount">${t.discount}% OFF</div>
@@ -808,8 +825,8 @@
                 const circle = document.createElement('span');
                 const d = Math.max(el.clientWidth, el.clientHeight);
                 circle.style.width = circle.style.height = `${d}px`;
-                circle.style.left = `${e.clientX - el.getBoundingClientRect().left - d/2}px`;
-                circle.style.top = `${e.clientY - el.getBoundingClientRect().top - d/2}px`;
+                circle.style.left = `${e.clientX - el.getBoundingClientRect().left - d / 2}px`;
+                circle.style.top = `${e.clientY - el.getBoundingClientRect().top - d / 2}px`;
                 circle.classList.add('ripple');
                 el.appendChild(circle);
                 setTimeout(() => circle.remove(), 600);
@@ -817,37 +834,35 @@
             };
             return el;
         }
+
         function checkFilter(t) {
-            if(activeFilters.cat && t.cat !== activeFilters.cat) return false;
-            if(activeFilters.discount === 'green' && t.discount >= 20) return false;
-            if(activeFilters.discount === 'yellow' && (t.discount < 20 || t.discount > 40)) return false;
-            if(activeFilters.discount === 'red' && t.discount <= 40) return false;
-            if(activeFilters.location && getCity(t) !== activeFilters.location) return false;
-            if(activeFilters.search) {
+            if (activeFilters.cat && t.cat !== activeFilters.cat) return false;
+            if (activeFilters.discount === 'green' && t.discount >= 20) return false;
+            if (activeFilters.discount === 'yellow' && (t.discount < 20 || t.discount > 40)) return false;
+            if (activeFilters.discount === 'red' && t.discount <= 40) return false;
+            if (activeFilters.location && getCity(t) !== activeFilters.location) return false;
+            if (activeFilters.search) {
                 const term = activeFilters.search.toLowerCase();
-                if(!t.name.toLowerCase().includes(term) && !t.cat.toLowerCase().includes(term)) return false;
+                if (!t.name.toLowerCase().includes(term) && !t.cat.toLowerCase().includes(term)) return false;
             }
             return true;
         }
+
         function populateCarousel() {
             const track = document.querySelector('.carousel-track');
             track.innerHTML = '';
-            let featured = displayedTiles;
+            let featured = displayedTiles.slice(0, 8);
             featured.sort(() => Math.random() - 0.5);
             featured.forEach(t => {
                 let tierColor = '--color-low';
                 if (t.discount >= 20) tierColor = '--color-mid';
                 if (t.discount > 40) tierColor = '--color-hot';
-                // Alta calidad: remuevo parámetros de baja resolución y uso Unsplash full
-                let highResImg = t.img;
-                if (t.img.includes('unsplash.com')) {
-                    highResImg = t.img.split('?')[0]; // Elimina ?w=400 para resolución máxima
-                }
+                const optimizedSrc = optimizeUnsplashUrl(t.img, 1220, 400, 80);
                 const item = document.createElement('div');
                 item.className = 'carousel-item';
                 item.innerHTML = `
                     <div style="position:relative;width:100%;height:100%;">
-                        <img src="${highResImg}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover;">
+                        <img src="${optimizedSrc}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" decoding="async">
                         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent 40%);display:flex;flex-direction:column;justify-content:flex-end;padding:30px 20px;color:white;text-align:center;">
                             <div style="font-size:2.5rem;font-weight:900;text-shadow:1px 1px 4px black;">${t.name.toUpperCase()}</div>
                             <div style="font-size:5rem;font-weight:900;text-shadow:2px 2px 6px black;color:var(${tierColor});margin-top:10px;">${t.discount}% OFF</div>
@@ -859,17 +874,14 @@
             });
             const items = document.querySelectorAll('.carousel-item');
             if (items.length === 0) return;
-
             let index = 0;
             const update = () => {
                 track.style.transform = `translateX(-${index * 100}%)`;
             };
-
             let autoSlide = setInterval(() => {
                 index = (index + 1) % items.length;
                 update();
-            }, 5000); // Más lento: 7 segundos entre imágenes
-
+            }, 5000);
             const carousel = document.querySelector('.carousel');
             carousel.addEventListener('mouseenter', () => clearInterval(autoSlide));
             carousel.addEventListener('mouseleave', () => {
@@ -878,9 +890,9 @@
                     update();
                 }, 5000);
             });
-
             update();
         }
+
         function populateTicker() {
             const group1 = document.getElementById('ticker-group1');
             const group2 = document.getElementById('ticker-group2');
@@ -908,6 +920,7 @@
             });
             group2.innerHTML = group1.innerHTML;
         }
+
         function populateAdminTicker() {
             const group1 = document.getElementById('admin-ticker-group1');
             const group2 = document.getElementById('admin-ticker-group2');
@@ -921,11 +934,12 @@
             });
             group2.innerHTML = group1.innerHTML;
         }
+
         function render() {
             const board = document.getElementById('puzzle-board');
             board.innerHTML = '';
             displayedTiles = tiles.filter(t => checkFilter(t));
-            if(viewMode === 'matrix') {
+            if (viewMode === 'matrix') {
                 const boardWidth = board.parentElement.clientWidth;
                 const cellSize = (boardWidth - (GAP * (COLS - 1))) / COLS;
                 let maxY = 0;
@@ -936,7 +950,7 @@
                     el.style.transform = `translate(${t.x * (cellSize + GAP)}px, ${t.y * (cellSize + GAP)}px)`;
                     el.style.position = 'absolute';
                     board.appendChild(el);
-                    if(t.y + t.h > maxY) maxY = t.y + t.h;
+                    if (t.y + t.h > maxY) maxY = t.y + t.h;
                 });
                 board.style.height = `${maxY * (cellSize + GAP)}px`;
             } else {
@@ -947,7 +961,7 @@
             populateTicker();
             populateAdminTicker();
         }
-        /* ... resto del script sin cambios ... */
+
         function toggleDropdown() {
             const menu = document.getElementById('dropdown-menu');
             menu.classList.toggle('active');
@@ -955,12 +969,14 @@
             chevron.classList.toggle('fa-chevron-down');
             chevron.classList.toggle('fa-chevron-up');
         }
+
         function selectLocation(city, text) {
             activeFilters.location = city;
             document.getElementById('location-text').innerText = text;
             toggleDropdown();
             render();
         }
+
         document.addEventListener('click', (e) => {
             const dropdown = document.querySelector('.location-dropdown');
             if (!dropdown.contains(e.target)) {
@@ -972,6 +988,7 @@
                 }
             }
         });
+
         function openFormModal() { document.getElementById('form-modal').classList.add('active'); }
         function closeFormModal() { document.getElementById('form-modal').classList.remove('active'); }
         function openDeliveryModal() { document.getElementById('delivery-modal').classList.add('active'); }
@@ -986,16 +1003,11 @@
         function closeShareModal() { document.getElementById('share-modal').classList.remove('active'); }
         function openPrivacyModal() { document.getElementById('privacy-modal').classList.add('active'); }
         function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
-        function openAnnouncement() { document.getElementById('announcement-modal').classList.add('active'); }
-        function closeAnnouncement() {
-            document.getElementById('announcement-modal').classList.remove('active');
-            safeStorage.set(POPUP_SEEN_KEY, CURRENT_VERSION);
-        }
         function openExitIntent() { document.getElementById('exit-intent-modal').classList.add('active'); }
         function closeExitIntent() { document.getElementById('exit-intent-modal').classList.remove('active'); }
         function declineExitIntent() {
             closeExitIntent();
-            safeStorage.set('exitIntentShown', 'true');
+            setStorage('exitIntentShown', 'true');
         }
         function toggleViewMode() {
             viewMode = viewMode === 'matrix' ? 'list' : 'matrix';
@@ -1004,7 +1016,7 @@
             render();
         }
         function filter(type, val, btn) {
-            if(activeFilters[type] === val) {
+            if (activeFilters[type] === val) {
                 activeFilters[type] = null;
                 btn.classList.remove('active');
             } else {
@@ -1046,9 +1058,10 @@
                 '<span style="color:var(--color-hot); font-weight:bold; font-size:1.2rem;">🔴 CERRADO</span>';
             let tierColor = t.discount > 40 ? 'var(--color-hot)' : t.discount >= 20 ? 'var(--color-mid)' : 'var(--color-low)';
             const encodedLocation = encodeURIComponent(t.location + ", Campana, Buenos Aires");
+            const optimizedSrc = optimizeUnsplashUrl(t.img, 800, 600, 90);
             const content = document.getElementById('gallery-card-content');
             content.innerHTML = `
-                <img src="${t.img}" class="gallery-img">
+                <img src="${optimizedSrc}" class="gallery-img" loading="lazy" decoding="async" alt="${t.name}">
                 <div class="gallery-body">
                     <h2>${t.name}</h2>
                     <h1 style="color:${tierColor}; font-size: 2.5rem; margin: 15px 0;">${t.discount}% OFF</h1>
@@ -1115,9 +1128,8 @@
                     prompt("No se pudo copiar automáticamente. Copiá manualmente:", window.location.href);
                 });
         }
-
         setInterval(() => {
-            if(viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search || activeFilters.location) return;
+            if (viewMode === 'list' || activeFilters.cat || activeFilters.discount || activeFilters.search || activeFilters.location) return;
             generateMatrix();
             render();
         }, 10000);
@@ -1129,10 +1141,7 @@
         function init() {
             generateMatrix();
             render();
-            if (safeStorage.get(POPUP_SEEN_KEY) !== CURRENT_VERSION) {
-                openAnnouncement();
-            }
-            if (!safeStorage.get('exitIntentShown')) {
+            if (!getStorage('exitIntentShown')) {
                 let hasInteracted = false;
                 document.addEventListener('click', () => hasInteracted = true, { once: true });
                 window.addEventListener('scroll', () => {
@@ -1149,6 +1158,7 @@
     </script>
 </body>
 </html>
+
 
 
 
